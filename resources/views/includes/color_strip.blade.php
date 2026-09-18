@@ -1,0 +1,1 @@
+<div class="h-[6px] w-full bg-[linear-gradient(to_right,var(--color-smanda-green)_40%,var(--color-smanda-yellow)_40%_70%,var(--color-smanda-red)_70%_88%,var(--color-smanda-blue)_88%)] fixed top-0 left-0 z-[2001]"></div>
