@@ -18,7 +18,9 @@
                 <li><a href="{{ url('/profil/tentang') }}" class="block py-[10px] px-[20px] text-[#333] no-underline text-[0.9rem] transition-all duration-200 hover:bg-smanda-black-light hover:text-smanda-black-dark hover:pl-[25px]">Tentang Sekolah</a></li>
                 <li><a href="{{ url('/profil/kepala-sekolah') }}" class="block py-[10px] px-[20px] text-[#333] no-underline text-[0.9rem] transition-all duration-200 hover:bg-smanda-black-light hover:text-smanda-black-dark hover:pl-[25px]">Kepala Sekolah</a></li>
                 <li><a href="{{ url('/profil/sarpras') }}" class="block py-[10px] px-[20px] text-[#333] no-underline text-[0.9rem] transition-all duration-200 hover:bg-smanda-black-light hover:text-smanda-black-dark hover:pl-[25px]">Sarana & Prasarana</a></li>
-                <li><a href="{{ url('/profil/sarpras') }}" class="block py-[10px] px-[20px] text-[#333] no-underline text-[0.9rem] transition-all duration-200 hover:bg-smanda-black-light hover:text-smanda-black-dark hover:pl-[25px]">Organisasi</a></li>
+                <li><a href="{{ url('/profil/sarpras') }}" class="block py-[10px] px-[20px] text-[#333] no-underline text-[0.9rem] transition-all duration-200 hover:bg-smanda-black-light hover:text-smanda-black-dark hover:pl-[25px]">OSIS</a></li>
+                <li><a href="{{ url('/profil/sarpras') }}" class="block py-[10px] px-[20px] text-[#333] no-underline text-[0.9rem] transition-all duration-200 hover:bg-smanda-black-light hover:text-smanda-black-dark hover:pl-[25px]">Ekstrakurikuler</a></li>
+                <li><a href="{{ url('/profil/sarpras') }}" class="block py-[10px] px-[20px] text-[#333] no-underline text-[0.9rem] transition-all duration-200 hover:bg-smanda-black-light hover:text-smanda-black-dark hover:pl-[25px]">Galeri Video</a></li>
             </ul>
         </li>
 
