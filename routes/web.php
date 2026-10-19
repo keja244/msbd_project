@@ -13,26 +13,26 @@ Route::prefix('profil')->group(function () {
         return view('profil-sekolah.tentang');
     });
     Route::get('/kepala-sekolah', function () {
-        return view('profil.kepala-sekolah'); // Buat file ini jika belum ada, atau arahkan ke view lain
+        return view('profil-sekolah.kepala-sekolah');
     });
     Route::get('/sarpras', function () {
-        return view('profil.sarpras');
+        return view('profil-sekolah.sarpras');
     });
     Route::get('/osis', function () {
-        return view('profil.osis');
+        return view('profil-sekolah.osis');
     });
     Route::get('/galeri-foto', function () {
-        return view('profil.galeri-foto');
+        return view('profil-sekolah.galeri-foto');
     });
     Route::get('/galeri-video', function () {
-        return view('profil.galeri-video');
+        return view('profil-sekolah.galeri-video');
     });
 });
 
 // --- AKADEMIK & INFORMASI ---
 Route::prefix('akademik')->group(function () {
     Route::get('/silabus', function () {
-        return view('akademik.silabus');
+        return view('akademik.rpm');
     });
     Route::get('/kalender', function () {
         return view('akademik.kalender');
@@ -53,7 +53,7 @@ Route::get('/berita', function () {
     return view('akademik.berita');
 });
 
-// --- DIREKTORI ---
+// --- DIREKTORI GURU & STAFF ---
 Route::prefix('direktori')->group(function () {
     Route::get('/siswa', function () {
         return view('direktori.siswa');
@@ -66,17 +66,18 @@ Route::prefix('direktori')->group(function () {
     });
 });
 
-// --- EKSTRAKURIKULER ---
+// --- EKSTRAKURIKULER & OSIS ---
 Route::get('/ekstrakurikuler', function () {
-    return view('ekstrakurikuler.index');
+    return view('osis-ekskul.index');
 });
+
 Route::get('/ekskul/{nama}', function ($nama) {
-    return view('ekstrakurikuler.detail', ['nama' => $nama]);
+    return view('osis-ekskul.detail', ['nama' => $nama]);
 });
 
 // --- SPMB & KELULUSAN ---
 Route::get('/spmb', function () {
-    return view('spmb.index');
+    return view('spmb.penerimaan');
 });
 Route::get('/kelulusan', function () {
     return view('spmb.kelulusan');

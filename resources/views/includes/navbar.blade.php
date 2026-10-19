@@ -44,61 +44,53 @@
 
                 <!-- ekstrakurikuler Mega Menu -->
                 <li class="relative h-full flex items-center group">
-                    <a href="#" class="text-gray-700 dark:text-gray-200 font-semibold text-[0.9rem] px-[12px] h-full flex items-center gap-[4px] group-hover:text-smanda-green dark:group-hover:text-smanda-yellow">Ekstrakurikuler ▾</a>
+                    <a href="{{ url('/ekstrakurikuler#ekskul') }}" class="text-gray-700 dark:text-gray-200 font-semibold text-[0.9rem] px-[12px] h-full flex items-center gap-[4px] group-hover:text-smanda-green dark:group-hover:text-smanda-yellow">Ekstrakurikuler ▾</a>
                     <div class="absolute top-full -left-[100px] bg-white dark:bg-gray-800 shadow-xl rounded-[16px] w-[680px] opacity-0 invisible translate-y-[10px] group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 border-t-[4px] border-smanda-green border-x border-b border-gray-100 dark:border-gray-700 p-[24px]">
+                        
+                        <!-- LINK DIREKTORI LENGKAP DI ATAS (MENGARAH LANGSUNG KE SECTION EKSKUL) -->
+                        <div class="flex justify-between items-center pb-[12px] mb-[16px] border-b border-gray-100 dark:border-gray-700">
+                            <span class="text-[0.75rem] font-bold text-gray-400 uppercase tracking-wider">Daftar Ekstrakurikuler</span>
+                            <a href="{{ url('/ekstrakurikuler#ekskul') }}" class="text-xs font-bold text-smanda-green hover:underline flex items-center gap-[4px]">
+                                Lihat Direktori Lengkap &rarr;
+                            </a>
+                        </div>
+
+                        <!-- DAFTAR PER SATUAN EKSKUL (LANGSUNG KE HALAMAN DETAIL) -->
                         <div class="grid grid-cols-4 gap-[20px]">
                             <div>
                                 <span class="text-[0.75rem] font-extrabold uppercase text-smanda-green block mb-[8px] pb-[4px] border-b dark:border-gray-700">Keterampilan</span>
                                 <ul class="list-none p-0 m-0 space-y-[4px] text-[0.85rem] text-gray-600 dark:text-gray-300">
-                                    <li><a href="{{ url('/ekskul/paskibra') }}" class="hover:text-smanda-green block">Paskibra</a></li>
-                                    <li><a href="{{ url('/ekskul/pramuka') }}" class="hover:text-smanda-green block">Pramuka</a></li>
-                                    <li><a href="{{ url('/ekskul/pmr') }}" class="hover:text-smanda-green block">PMR</a></li>
-                                    <li><a href="{{ url('/ekskul/pks') }}" class="hover:text-smanda-green block">PKS</a></li>
-                                    <li><a href="{{ url('/ekskul/pencinta-alam') }}" class="hover:text-smanda-green block">Pencinta Alam</a></li>
-                                    <li><a href="{{ url('/ekskul/kopsis') }}" class="hover:text-smanda-green block">Koperasi Siswa</a></li>
+                                    @for ($i = 1; $i <= 6; $i++)
+                                    <li><a href="{{ url('/ekskul/ekskul-' . $i) }}" class="hover:text-smanda-green block transition-colors">ekskul{{ $i }}</a></li>
+                                    @endfor
                                 </ul>
                             </div>
                             <div>
-                                <span class="text-[0.75rem] font-extrabold uppercase text-smanda-yellow-hover block mb-[8px] pb-[4px] border-b dark:border-gray-700">Olahraga</span>
+                                <span class="text-[0.75rem] font-extrabold uppercase text-smanda-yellow block mb-[8px] pb-[4px] border-b dark:border-gray-700">Olahraga</span>
                                 <ul class="list-none p-0 m-0 space-y-[4px] text-[0.85rem] text-gray-600 dark:text-gray-300">
-                                    <li><a href="{{ url('/ekskul/basket') }}" class="hover:text-smanda-green block">Basket</a></li>
-                                    <li><a href="{{ url('/ekskul/futsal') }}" class="hover:text-smanda-green block">Futsal / Sepak Bola</a></li>
-                                    <li><a href="{{ url('/ekskul/voli') }}" class="hover:text-smanda-green block">Voli</a></li>
-                                    <li><a href="{{ url('/ekskul/bulutangkis') }}" class="hover:text-smanda-green block">Bulu Tangkis</a></li>
-                                    <li><a href="{{ url('/ekskul/taekwondo') }}" class="hover:text-smanda-green block">Taekwondo</a></li>
-                                    <li><a href="{{ url('/ekskul/pencak-silat') }}" class="hover:text-smanda-green block">Pencak Silat</a></li>
-                                    <li><a href="{{ url('/ekskul/catur') }}" class="hover:text-smanda-green block">Catur</a></li>
+                                    @for ($i = 7; $i <= 13; $i++)
+                                    <li><a href="{{ url('/ekskul/ekskul-' . $i) }}" class="hover:text-smanda-green block transition-colors">ekskul{{ $i }}</a></li>
+                                    @endfor
                                 </ul>
                             </div>
                             <div>
                                 <span class="text-[0.75rem] font-extrabold uppercase text-smanda-red block mb-[8px] pb-[4px] border-b dark:border-gray-700">Seni & Budaya</span>
                                 <ul class="list-none p-0 m-0 space-y-[4px] text-[0.85rem] text-gray-600 dark:text-gray-300">
-                                    <li><a href="{{ url('/ekskul/paduan-suara') }}" class="hover:text-smanda-green block">Paduan Suara</a></li>
-                                    <li><a href="{{ url('/ekskul/marching-band') }}" class="hover:text-smanda-green block">Marching Band</a></li>
-                                    <li><a href="{{ url('/ekskul/tari-tradisional') }}" class="hover:text-smanda-green block">Tari Tradisional</a></li>
-                                    <li><a href="{{ url('/ekskul/teater') }}" class="hover:text-smanda-green block">Teater & Sastra</a></li>
-                                    <li><a href="{{ url('/ekskul/fotografi') }}" class="hover:text-smanda-green block">Fotografi & Jurnalistik</a></li>
-                                    <li><a href="{{ url('/ekskul/seni-rupa') }}" class="hover:text-smanda-green block">Seni Rupa & Lukis</a></li>
+                                    @for ($i = 14; $i <= 19; $i++)
+                                    <li><a href="{{ url('/ekskul/ekskul-' . $i) }}" class="hover:text-smanda-green block transition-colors">ekskul{{ $i }}</a></li>
+                                    @endfor
                                 </ul>
                             </div>
                             <div>
                                 <span class="text-[0.75rem] font-extrabold uppercase text-smanda-blue block mb-[8px] pb-[4px] border-b dark:border-gray-700">Akademik & Agama</span>
                                 <ul class="list-none p-0 m-0 space-y-[4px] text-[0.85rem] text-gray-600 dark:text-gray-300">
-                                    <li><a href="{{ url('/ekskul/rohkris') }}" class="hover:text-smanda-green block">Rohkris</a></li>
-                                    <li><a href="{{ url('/ekskul/rohis') }}" class="hover:text-smanda-green block">Rohis / BDI</a></li>
-                                    <li><a href="{{ url('/ekskul/kir') }}" class="hover:text-smanda-green block">KIR (Karya Ilmiah Remaja)</a></li>
-                                    <li><a href="{{ url('/ekskul/english-club') }}" class="hover:text-smanda-green block">English Club</a></li>
-                                    <li><a href="{{ url('/ekskul/komputer') }}" class="hover:text-smanda-green block">IT & Robotik</a></li>
-                                    <li><a href="{{ url('/ekskul/japan-club') }}" class="hover:text-smanda-green block">Japan Club</a></li>
+                                    @for ($i = 20; $i <= 25; $i++)
+                                    <li><a href="{{ url('/ekskul/ekskul-' . $i) }}" class="hover:text-smanda-green block transition-colors">ekskul{{ $i }}</a></li>
+                                    @endfor
                                 </ul>
                             </div>
                         </div>
-                        <div class="mt-[16px] pt-[12px] border-t border-gray-100 dark:border-gray-700 flex justify-between items-center bg-gray-50 dark:bg-gray-900/50 -mx-[24px] -mb-[24px] p-[12px_24px] rounded-b-[16px]">
-                            <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">Total 25+ ekstrakurikuler Aktif</span>
-                            <a href="{{ url('/ekstrakurikuler') }}" class="text-xs font-bold text-smanda-green hover:underline">
-                                Lihat Direktori Lengkap &rarr;
-                            </a>
-                        </div>
+
                     </div>
                 </li>
 
@@ -242,11 +234,11 @@
             </button>
             <h4 class="font-extrabold text-[1rem] text-gray-800 dark:text-gray-200 mb-[12px]">Profil Sekolah</h4>
             <ul class="list-none p-0 m-0 space-y-[10px] text-[0.9rem]">
-                <li><a href="{{ url('/profil/tentang') }}" class="block py-[4px] text-gray-600 dark:text-gray-300 hover:text-smanda-green">Tentang Sekolah</a></li>
-                <li><a href="{{ url('/profil/kepala-sekolah') }}" class="block py-[4px] text-gray-600 dark:text-gray-300 hover:text-smanda-green">Kepala Sekolah</a></li>
-                <li><a href="{{ url('/profil/sarpras') }}" class="block py-[4px] text-gray-600 dark:text-gray-300 hover:text-smanda-green">Sarana & Prasarana</a></li>
-                <li><a href="{{ url('/profil/osis') }}" class="block py-[4px] text-gray-600 dark:text-gray-300 hover:text-smanda-green">OSIS</a></li>
-                <li><a href="{{ url('/profil/galeri-video') }}" class="block py-[4px] text-gray-600 dark:text-gray-300 hover:text-smanda-green">Galeri Video</a></li>
+                <li><a href="{{ url('/profil-sekolah/tentang') }}" class="block py-[4px] text-gray-600 dark:text-gray-300 hover:text-smanda-green">Tentang Sekolah</a></li>
+                <li><a href="{{ url('/profil-sekolah/kepala-sekolah') }}" class="block py-[4px] text-gray-600 dark:text-gray-300 hover:text-smanda-green">Kepala Sekolah</a></li>
+                <li><a href="{{ url('/profil-sekolah/sarpras') }}" class="block py-[4px] text-gray-600 dark:text-gray-300 hover:text-smanda-green">Sarana & Prasarana</a></li>
+                <li><a href="{{ url('/profil-sekolah/osis') }}" class="block py-[4px] text-gray-600 dark:text-gray-300 hover:text-smanda-green">OSIS</a></li>
+                <li><a href="{{ url('/profil-sekolah/galeri-video') }}" class="block py-[4px] text-gray-600 dark:text-gray-300 hover:text-smanda-green">Galeri Video</a></li>
             </ul>
         </div>
 
@@ -254,51 +246,47 @@
             <button onclick="closeSubmenu('sub-ekskul')" class="flex items-center gap-[6px] text-xs font-bold text-smanda-green uppercase mb-[16px] pb-[8px] border-b dark:border-gray-800 w-full">
                 &larr; Kembali ke Menu Utama
             </button>
-            <h4 class="font-extrabold text-[1rem] text-gray-800 dark:text-gray-200 mb-[16px]">Daftar ekstrakurikuler</h4>
+
+            <!-- LINK DIREKTORI LENGKAP DI MOBILE -->
+            <div class="flex justify-between items-center pb-[12px] mb-[16px] border-b border-gray-100 dark:border-gray-800">
+                <span class="text-[0.75rem] font-bold text-gray-400 uppercase tracking-wider">Daftar Ekstrakurikuler</span>
+                <a href="{{ url('/ekstrakurikuler#ekskul') }}" class="text-xs font-bold text-smanda-green hover:underline flex items-center gap-[4px]">
+                    Selengkapnya &rarr;
+                </a>
+            </div>
+
+            <h4 class="font-extrabold text-[1rem] text-gray-800 dark:text-gray-200 mb-[16px]">Satuan Ekstrakurikuler</h4>
             <div class="space-y-[16px]">
                 <div>
                     <span class="text-[0.75rem] font-bold uppercase text-smanda-green block mb-[6px]">Keterampilan</span>
                     <ul class="list-none p-0 m-0 space-y-[6px] text-[0.88rem] pl-[10px]">
-                        <li><a href="{{ url('/ekskul/paskibra') }}" class="text-gray-600 dark:text-gray-300 block">Paskibra</a></li>
-                        <li><a href="{{ url('/ekskul/pramuka') }}" class="text-gray-600 dark:text-gray-300 block">Pramuka</a></li>
-                        <li><a href="{{ url('/ekskul/pmr') }}" class="text-gray-600 dark:text-gray-300 block">PMR</a></li>
-                        <li><a href="{{ url('/ekskul/pks') }}" class="text-gray-600 dark:text-gray-300 block">PKS</a></li>
-                        <li><a href="{{ url('/ekskul/pencinta-alam') }}" class="text-gray-600 dark:text-gray-300 block">Pencinta Alam</a></li>
-                        <li><a href="{{ url('/ekskul/kopsis') }}" class="text-gray-600 dark:text-gray-300 block">Koperasi Siswa</a></li>
+                        @for ($i = 1; $i <= 6; $i++)
+                        <li><a href="{{ url('/ekskul/ekskul-' . $i) }}" class="text-gray-600 dark:text-gray-300 block hover:text-smanda-green">ekskul{{ $i }}</a></li>
+                        @endfor
                     </ul>
                 </div>
                 <div>
-                    <span class="text-[0.75rem] font-bold uppercase text-smanda-yellow-hover block mb-[6px]">Olahraga</span>
+                    <span class="text-[0.75rem] font-bold uppercase text-smanda-yellow block mb-[6px]">Olahraga</span>
                     <ul class="list-none p-0 m-0 space-y-[6px] text-[0.88rem] pl-[10px]">
-                        <li><a href="{{ url('/ekskul/basket') }}" class="text-gray-600 dark:text-gray-300 block">Basket</a></li>
-                        <li><a href="{{ url('/ekskul/futsal') }}" class="text-gray-600 dark:text-gray-300 block">Futsal / Sepak Bola</a></li>
-                        <li><a href="{{ url('/ekskul/voli') }}" class="text-gray-600 dark:text-gray-300 block">Voli</a></li>
-                        <li><a href="{{ url('/ekskul/bulutangkis') }}" class="text-gray-600 dark:text-gray-300 block">Bulu Tangkis</a></li>
-                        <li><a href="{{ url('/ekskul/taekwondo') }}" class="text-gray-600 dark:text-gray-300 block">Taekwondo</a></li>
-                        <li><a href="{{ url('/ekskul/pencak-silat') }}" class="text-gray-600 dark:text-gray-300 block">Pencak Silat</a></li>
-                        <li><a href="{{ url('/ekskul/catur') }}" class="text-gray-600 dark:text-gray-300 block">Catur</a></li>
+                        @for ($i = 7; $i <= 13; $i++)
+                        <li><a href="{{ url('/ekskul/ekskul-' . $i) }}" class="text-gray-600 dark:text-gray-300 block hover:text-smanda-green">ekskul{{ $i }}</a></li>
+                        @endfor
                     </ul>
                 </div>
                 <div>
                     <span class="text-[0.75rem] font-bold uppercase text-smanda-red block mb-[6px]">Seni & Budaya</span>
                     <ul class="list-none p-0 m-0 space-y-[6px] text-[0.88rem] pl-[10px]">
-                        <li><a href="{{ url('/ekskul/paduan-suara') }}" class="text-gray-600 dark:text-gray-300 block">Paduan Suara</a></li>
-                        <li><a href="{{ url('/ekskul/marching-band') }}" class="text-gray-600 dark:text-gray-300 block">Marching Band</a></li>
-                        <li><a href="{{ url('/ekskul/tari-tradisional') }}" class="text-gray-600 dark:text-gray-300 block">Tari Tradisional</a></li>
-                        <li><a href="{{ url('/ekskul/teater') }}" class="text-gray-600 dark:text-gray-300 block">Teater & Sastra</a></li>
-                        <li><a href="{{ url('/ekskul/fotografi') }}" class="text-gray-600 dark:text-gray-300 block">Fotografi & Jurnalistik</a></li>
-                        <li><a href="{{ url('/ekskul/seni-rupa') }}" class="text-gray-600 dark:text-gray-300 block">Seni Rupa & Lukis</a></li>
+                        @for ($i = 14; $i <= 19; $i++)
+                        <li><a href="{{ url('/ekskul/ekskul-' . $i) }}" class="text-gray-600 dark:text-gray-300 block hover:text-smanda-green">ekskul{{ $i }}</a></li>
+                        @endfor
                     </ul>
                 </div>
                 <div>
                     <span class="text-[0.75rem] font-bold uppercase text-smanda-blue block mb-[6px]">Akademik & Agama</span>
                     <ul class="list-none p-0 m-0 space-y-[6px] text-[0.88rem] pl-[10px]">
-                        <li><a href="{{ url('/ekskul/rohkris') }}" class="text-gray-600 dark:text-gray-300 block">Rohkris</a></li>
-                        <li><a href="{{ url('/ekskul/rohis') }}" class="text-gray-600 dark:text-gray-300 block">Rohis / BDI</a></li>
-                        <li><a href="{{ url('/ekskul/kir') }}" class="text-gray-600 dark:text-gray-300 block">KIR (Karya Ilmiah Remaja)</a></li>
-                        <li><a href="{{ url('/ekskul/english-club') }}" class="text-gray-600 dark:text-gray-300 block">English Club</a></li>
-                        <li><a href="{{ url('/ekskul/komputer') }}" class="text-gray-600 dark:text-gray-300 block">IT & Robotik</a></li>
-                        <li><a href="{{ url('/ekskul/japan-club') }}" class="text-gray-600 dark:text-gray-300 block">Japan Club</a></li>
+                        @for ($i = 20; $i <= 25; $i++)
+                        <li><a href="{{ url('/ekskul/ekskul-' . $i) }}" class="text-gray-600 dark:text-gray-300 block hover:text-smanda-green">ekskul{{ $i }}</a></li>
+                        @endfor
                     </ul>
                 </div>
             </div>

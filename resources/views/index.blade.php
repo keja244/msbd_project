@@ -12,7 +12,7 @@
         
         <!-- Slide 1  -->
         <div class="slide opacity-0 absolute top-0 left-0 w-full h-full transition-opacity duration-800 ease-in-out bg-cover bg-center flex items-center before:content-[''] before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-[linear-gradient(90deg,rgba(0,0,0,0.75)_0%,rgba(0,0,0,0.3)_100%)]" 
-             style="background-image: url('{{ asset('images/slide2.jpeg') }}');">
+             style="background-image: url('{{ asset('images/slide1.jpeg') }}');">
             <div class="relative z-[5] max-w-[1280px] w-full mx-auto px-[24px]">
                 <div class="max-w-[700px]">
                     <span class="text-[0.85rem] font-semibold tracking-[2px] uppercase text-[#e8f5f3] block mb-[10px]">Smandu Hebat</span>
@@ -41,7 +41,7 @@
 
         <!-- Slide 2 -->
         <div class="slide active opacity-100 absolute top-0 left-0 w-full h-full transition-opacity duration-800 ease-in-out bg-cover bg-center flex items-center before:content-[''] before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-[linear-gradient(90deg,rgba(0,0,0,0.75)_0%,rgba(0,0,0,0.3)_100%)]" 
-             style="background-image: url('{{ asset('images/slide1.jpeg') }}');">
+             style="background-image: url('{{ asset('images/slide2.jpeg') }}');">
             <div class="relative z-[5] max-w-[1280px] w-full mx-auto px-[24px]">
                 <div class="max-w-[700px]">
                     <span class="text-[0.85rem] font-semibold tracking-[2px] uppercase text-[#e8f5f3] block mb-[10px]">Smandu Hebat</span>
@@ -83,6 +83,28 @@
             </div>
         </div>
 
+        <!-- Slide 4  -->
+        <div class="slide opacity-0 absolute top-0 left-0 w-full h-full transition-opacity duration-800 ease-in-out bg-cover bg-center flex items-center before:content-[''] before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-[linear-gradient(90deg,rgba(0,0,0,0.75)_0%,rgba(0,0,0,0.3)_100%)]" 
+             style="background-image: url('{{ asset('images/slide4.jpeg') }}');">
+            <div class="relative z-[5] max-w-[1280px] w-full mx-auto px-[24px]">
+                <div class="max-w-[700px]">
+                    <span class="text-[0.85rem] font-semibold tracking-[2px] uppercase text-[#e8f5f3] block mb-[10px]">Smandu Hebat</span>
+                    <h1 class="text-[2.8rem] sm:text-[3.6rem] font-extrabold text-white leading-[1.15] mb-[16px]">
+                        Prestasi & Kegiatan <br>
+                        <span class="text-smanda-yellow">Siswa Unggulan</span>
+                    </h1>
+                    <p class="text-[1.05rem] text-[#d1d5db] font-light leading-[1.7] mb-[30px]">
+                        Berbagai pencapaian membanggakan diraih oleh siswa-siswi SMAN 2 Medan di tingkat regional maupun nasional.
+                    </p>
+                    <div class="flex items-center gap-[16px] flex-wrap">
+                        <a href="{{ url('/akademik/prestasi') }}" class="bg-smanda-green text-white py-[12px] px-[28px] rounded-[8px] font-semibold text-[0.95rem] transition-all duration-300 hover:bg-smanda-green-dark">
+                            Lihat Prestasi &rarr;
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Navigasi Kiri & Kanan -->
         <button class="slider-btn prev absolute top-1/2 -translate-y-1/2 left-[20px] z-[10] bg-white/20 text-white border-none w-[45px] h-[45px] rounded-full cursor-pointer text-[1.2rem] flex items-center justify-center backdrop-blur-[4px] transition-colors duration-300 hover:bg-smanda-yellow hover:text-smanda-dark" onclick="moveSlide(-1)">&#10094;</button>
         <button class="slider-btn next absolute top-1/2 -translate-y-1/2 right-[20px] z-[10] bg-white/20 text-white border-none w-[45px] h-[45px] rounded-full cursor-pointer text-[1.2rem] flex items-center justify-center backdrop-blur-[4px] transition-colors duration-300 hover:bg-smanda-yellow hover:text-smanda-dark" onclick="moveSlide(1)">&#10095;</button>
@@ -92,32 +114,28 @@
             <span class="dot active w-[28px] h-[8px] rounded-[12px] bg-smanda-yellow cursor-pointer transition-all duration-300" onclick="currentSlide(0)"></span>
             <span class="dot w-[8px] h-[8px] rounded-full bg-white/40 cursor-pointer transition-all duration-300" onclick="currentSlide(1)"></span>
             <span class="dot w-[8px] h-[8px] rounded-full bg-white/40 cursor-pointer transition-all duration-300" onclick="currentSlide(2)"></span>
+            <span class="dot w-[8px] h-[8px] rounded-full bg-white/40 cursor-pointer transition-all duration-300" onclick="currentSlide(3)"></span>
         </div>
 
     </section>
 
-    <!-- KEUNGGULAN -->
+    <!-- Motto -->
     <section class="max-w-[1280px] mx-auto px-[24px] py-[50px] border-b border-gray-200/60 dark:border-gray-800 relative overflow-hidden">
         <div class="relative z-10 grid grid-cols-2 md:grid-cols-5 gap-[16px] sm:gap-[20px] text-center pt-[10px]">
             <div class="py-[10px] bg-white/50 dark:bg-gray-800/50 md:bg-transparent rounded-[12px] p-3 md:p-0 border border-gray-100 dark:border-gray-700 md:border-none">
-                <span class="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-smanda-green block mb-[4px]">Harmonis</span>
-                <h3 class="text-[#4a5568] dark:text-gray-300 font-medium text-[1.1rem] sm:text-[1.2em]">Desc</h3>
+                <span class="text-xl font-extrabold uppercase tracking-wider text-smanda-green block mb-[4px]">Harmonis</span>
             </div>
             <div class="py-[10px] bg-white/50 dark:bg-gray-800/50 md:bg-transparent rounded-[12px] p-3 md:p-0 border border-gray-100 dark:border-gray-700 md:border-none">
-                <span class="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-smanda-yellow-hover block mb-[4px]">Edukatif</span>
-                <h3 class="text-[#4a5568] dark:text-gray-300 font-medium text-[1.1rem] sm:text-[1.2em]">Desc</h3>
+                <span class="text-xl font-extrabold uppercase tracking-wider text-smanda-yellow block mb-[4px]">Edukatif</span>
             </div>
             <div class="py-[10px] bg-white/50 dark:bg-gray-800/50 md:bg-transparent rounded-[12px] p-3 md:p-0 border border-gray-100 dark:border-gray-700 md:border-none">
-                <span class="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-smanda-red block mb-[4px]">Bersih</span>
-                <h3 class="text-[#4a5568] dark:text-gray-300 font-medium text-[1.1rem] sm:text-[1.2em]">Desc</h3>
+                <span class="text-xl font-extrabold uppercase tracking-wider text-smanda-blue block mb-[4px]">Bersih</span>
             </div>
             <div class="py-[10px] bg-white/50 dark:bg-gray-800/50 md:bg-transparent rounded-[12px] p-3 md:p-0 border border-gray-100 dark:border-gray-700 md:border-none">
-                <span class="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-smanda-blue block mb-[4px]">Asri</span>
-                <h3 class="text-[#4a5568] dark:text-gray-300 font-medium text-[1.1rem] sm:text-[1.2em]">Desc</h3>
+                <span class="text-xl font-extrabold uppercase tracking-wider text-smanda-red block mb-[4px]">Asri</span>
             </div>
             <div class="py-[10px] bg-white/50 dark:bg-gray-800/50 md:bg-transparent rounded-[12px] p-3 md:p-0 border border-gray-100 dark:border-gray-700 md:border-none col-span-2 md:col-span-1">
-                <span class="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-smanda-green block mb-[4px]">Tertib</span>
-                <h3 class="text-[#4a5568] dark:text-gray-300 font-medium text-[1.1rem] sm:text-[1.2em]">Desc</h3>
+                <span class="text-xl font-extrabold uppercase tracking-wider text-smanda-green block mb-[4px]">Tertib</span>
             </div>
         </div>
     </section>
@@ -381,7 +399,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-[40px] items-center">
                 <div class="lg:col-span-5">
                     <div class="relative w-full max-w-[380px] mx-auto lg:mx-0 rounded-[16px] overflow-hidden shadow-sm bg-gray-100 dark:bg-gray-800">
-                        <img src="https://asset-2.tstatic.net/medan/foto/bank/images/Peringatan-Hari-Pendidikan-Nasional-di-SMA-Negeri-2-Medan.jpg" alt="Foto Kepala Sekolah" class="w-full h-[420px] object-cover">
+                        <img src="{{ asset('images/kepsek.jpg') }}" alt="Foto Kepala Sekolah" class="w-full h-[420px] object-cover">
                     </div>
                 </div>
 
@@ -408,15 +426,18 @@
         </div>
     </section>
 
-    <!-- ========================================== -->
     <!-- SECTION GALERI FOTO -->
-    <!-- ========================================== -->
     <section class="max-w-[1280px] mx-auto px-[24px] py-[80px] border-t border-gray-200/60 dark:border-gray-800 relative overflow-hidden">
-        <span class="absolute top-[-15px] left-[20px] text-[6rem] md:text-[9rem] font-extrabold text-gray-200/50 dark:text-gray-800/60 select-none pointer-events-none z-0">
+    
+        <!-- Watermark Background -->
+        <span class="absolute top-[-5px] left-[20px] text-[6rem] md:text-[9rem] font-extrabold text-gray-200/40 dark:text-gray-800/40 select-none pointer-events-none z-0">
             Galeri
         </span>
 
-        <div class="relative z-10 pt-[20px]">
+        <!-- Konten Utama -->
+        <div class="relative z-10 pt-[40px]">
+            
+            <!-- Judul Section -->
             <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-[36px]">
                 <div>
                     <span class="text-xs font-bold tracking-[2px] text-smanda-green uppercase block mb-[6px]">Dokumentasi Kegiatan</span>
@@ -429,33 +450,53 @@
 
             <!-- Grid Foto -->
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-[24px]">
-                <div class="group relative overflow-hidden rounded-[16px] bg-gray-100 dark:bg-gray-800 aspect-[4/3] shadow-sm border border-gray-100 dark:border-gray-700">
-                    <img src="https://asset-2.tstatic.net/medan/foto/bank/images/Peringatan-Hari-Pendidikan-Nasional-di-SMA-Negeri-2-Medan.jpg" alt="Foto Kegiatan 1" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                        <span class="text-white text-sm font-semibold">Upacara Hardiknas SMAN 2 Medan</span>
+                    
+                <!-- Foto 1 -->
+                <div class="group flex flex-col bg-white dark:bg-gray-800 rounded-[16px] overflow-hidden shadow-sm border border-gray-100 dark:border-gray-700">
+                    <div class="relative overflow-hidden aspect-[4/3] bg-gray-100 dark:bg-gray-900">
+                        <img src="https://asset-2.tstatic.net/medan/foto/bank/images/Peringatan-Hari-Pendidikan-Nasional-di-SMA-Negeri-2-Medan.jpg" alt="Foto Kegiatan 1" class="w-full h-full object-cover transition-transform duration-500 md:group-hover:scale-110">
+                        <!-- Overlay Khusus Desktop -->
+                        <div class="hidden md:flex absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 items-end p-4">
+                            <span class="text-white text-sm font-semibold">Upacara Hardiknas SMAN 2 Medan</span>
+                        </div>
+                    </div>
+                    <!-- Caption Khusus HP -->
+                    <div class="p-4 md:hidden">
+                        <span class="text-gray-800 dark:text-gray-200 text-sm font-semibold block">Upacara Hardiknas SMAN 2 Medan</span>
                     </div>
                 </div>
 
-                <div class="group relative overflow-hidden rounded-[16px] bg-gray-100 dark:bg-gray-800 aspect-[4/3] shadow-sm border border-gray-100 dark:border-gray-700">
-                    <img src="https://tse2.mm.bing.net/th/id/OIP.qZAOvySOO5XS7LYVS_uj-wHaDt?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Foto Kegiatan 2" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                        <span class="text-white text-sm font-semibold">Kegiatan Ekstrakurikuler Siswa</span>
+                <!-- Foto 2 -->
+                <div class="group flex flex-col bg-white dark:bg-gray-800 rounded-[16px] overflow-hidden shadow-sm border border-gray-100 dark:border-gray-700">
+                    <div class="relative overflow-hidden aspect-[4/3] bg-gray-100 dark:bg-gray-900">
+                        <img src="https://tse2.mm.bing.net/th/id/OIP.qZAOvySOO5XS7LYVS_uj-wHaDt?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Foto Kegiatan 2" class="w-full h-full object-cover transition-transform duration-500 md:group-hover:scale-110">
+                        <div class="hidden md:flex absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 items-end p-4">
+                            <span class="text-white text-sm font-semibold">Kegiatan Ekstrakurikuler Siswa</span>
+                        </div>
+                    </div>
+                    <div class="p-4 md:hidden">
+                        <span class="text-gray-800 dark:text-gray-200 text-sm font-semibold block">Kegiatan Ekstrakurikuler Siswa</span>
                     </div>
                 </div>
 
-                <div class="group relative overflow-hidden rounded-[16px] bg-gray-100 dark:bg-gray-800 aspect-[4/3] shadow-sm border border-gray-100 dark:border-gray-700 sm:col-span-2 md:col-span-1">
-                    <img src="{{ asset('images/slide1.jpeg') }}" alt="Foto Kegiatan 3" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                        <span class="text-white text-sm font-semibold">Lingkungan Sekolah Asri</span>
+                <!-- Foto 3 -->
+                <div class="group flex flex-col bg-white dark:bg-gray-800 rounded-[16px] overflow-hidden shadow-sm border border-gray-100 dark:border-gray-700 sm:col-span-2 md:col-span-1">
+                    <div class="relative overflow-hidden aspect-[4/3] bg-gray-100 dark:bg-gray-900">
+                        <img src="{{ asset('images/slide1.jpeg') }}" alt="Foto Kegiatan 3" class="w-full h-full object-cover transition-transform duration-500 md:group-hover:scale-110">
+                        <div class="hidden md:flex absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 items-end p-4">
+                            <span class="text-white text-sm font-semibold">Lingkungan Sekolah Asri</span>
+                        </div>
+                    </div>
+                    <div class="p-4 md:hidden">
+                        <span class="text-gray-800 dark:text-gray-200 text-sm font-semibold block">Lingkungan Sekolah Asri</span>
                     </div>
                 </div>
+
             </div>
         </div>
     </section>
 
-    <!-- ========================================== -->
     <!-- SECTION GALERI VIDEO -->
-    <!-- ========================================== -->
     <section class="max-w-[1280px] mx-auto px-[24px] py-[80px] border-t border-gray-200/60 dark:border-gray-800 relative overflow-hidden">
         <span class="absolute top-[-15px] left-[20px] text-[6rem] md:text-[9rem] font-extrabold text-gray-200/50 dark:text-gray-800/60 select-none pointer-events-none z-0">
             Video
