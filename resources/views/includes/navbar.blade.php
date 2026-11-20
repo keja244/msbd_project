@@ -142,6 +142,11 @@
                     </ul>
                 </li>
 
+                <!-- Survey -->
+                <li class="h-full flex items-center">
+                    <a href="{{ url('/survei') }}" class="text-gray-700 dark:text-gray-200 font-semibold text-[0.9rem] px-[12px] h-full flex items-center hover:text-smanda-green dark:hover:text-smanda-yellow transition-colors">Survei</a>
+                </li>
+
                 <!-- Kontak -->
                 <li class="h-full flex items-center">
                     <a href="{{ url('/kontak') }}" class="text-gray-700 dark:text-gray-200 font-semibold text-[0.9rem] px-[12px] h-full flex items-center hover:text-smanda-green dark:hover:text-smanda-yellow transition-colors">Kontak</a>
@@ -222,6 +227,8 @@
                         SPMB & Kelulusan <span class="text-xs text-gray-400">&rarr;</span>
                     </button>
                 </li>
+
+                <li><a href="{{ url('/survei') }}" class="block py-[8px] font-semibold text-gray-700 dark:text-gray-200 hover:text-smanda-green">Survei</a></li>
 
                 <li><a href="{{ url('/kontak') }}" class="block py-[8px] font-semibold text-gray-700 dark:text-gray-200 hover:text-smanda-green">Kontak</a></li>
             </ul>
