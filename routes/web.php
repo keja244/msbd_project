@@ -98,6 +98,9 @@ Route::prefix('survei')->name('survei.')->group(function () {
 
     // Publik
     Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
+    
+    Route::middleware(SurveiRole::class.':guru_tendik')->group(function () {
+    });
 
     // Masuk / tamu / keluar (formnya ada di halaman welcome)
     Route::post('/masuk', [AuthController::class, 'login'])->name('masuk.proses');
