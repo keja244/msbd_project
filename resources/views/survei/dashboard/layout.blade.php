@@ -12,24 +12,35 @@
       }
     @endphp
 
-    <!-- NAVIGASI DASHBOARD -->
-    <div class="flex flex-wrap items-center justify-between gap-3 mb-8">
-      <nav class="flex gap-1.5 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 p-1.5 rounded-xl shadow-sm">
-        @foreach($menu as [$label, $rute])
-          <a href="{{ route($rute) }}"
-             class="px-4 py-2 rounded-lg text-sm font-bold transition-all {{ request()->routeIs($rute.'*') ? 'bg-smanda-green text-white' : 'text-gray-500 dark:text-gray-400 hover:text-smanda-green' }}">
-            {{ $label }}
-          </a>
-        @endforeach
+    
+  <!-- NAVIGASI DASHBOARD -->
+  <div class="flex flex-wrap items-center justify-between gap-3 mb-8">
+
+      <nav class="flex flex-wrap gap-1.5 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 p-1.5 rounded-xl shadow-sm">
+          @foreach($menu as [$label, $rute])
+              <a href="{{ route($rute) }}"
+                class="px-4 py-2 rounded-lg text-sm font-bold transition-all {{ request()->routeIs($rute) ? 'bg-smanda-green text-white' : 'text-gray-500 dark:text-gray-400 hover:text-smanda-green' }}">
+                  {{ $label }}
+              </a>
+          @endforeach
       </nav>
-      <div class="flex items-center gap-3">
-        <span class="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-yellow-100 dark:bg-yellow-900/40 text-smanda-yellow">{{ $role }}</span>
-        <form method="POST" action="{{ route('survei.keluar') }}">
-          @csrf
-          <button type="submit" class="text-sm font-semibold text-gray-500 dark:text-gray-400 hover:text-smanda-red transition-colors">Keluar</button>
-        </form>
+
+      <div class="flex items-center gap-4">
+          <span class="text-xs font-bold uppercase tracking-wider px-3 py-2 rounded-full bg-yellow-100 dark:bg-yellow-900/40 text-smanda-yellow">
+              {{ $role }}
+          </span>
+
+          <form method="POST" action="{{ route('survei.keluar') }}">
+              @csrf
+              <button type="submit"
+                  class="text-sm font-bold text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300 transition-colors">
+                  Keluar
+              </button>
+          </form>
       </div>
-    </div>
+
+  </div>
+
 
     @yield('isi')
 
