@@ -212,5 +212,3 @@
 </script>
 
 @endsection
-
-lempar
