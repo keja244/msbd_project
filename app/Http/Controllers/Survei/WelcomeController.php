@@ -3,18 +3,27 @@
 namespace App\Http\Controllers\Survei;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class WelcomeController extends Controller
 {
     public function index()
     {
-        // Data sementara, nanti diganti dari database
-        $periode = (object) ['semester' => 1, 'tahun_ajaran' => '2026/2027', 'selesai' => '2026-11-30'];
-        $kategori = collect([
-            ['nama' => 'Siswa', 'wajib' => true], ['nama' => 'Guru', 'wajib' => true],
-            ['nama' => 'Tendik', 'wajib' => true], ['nama' => 'Orang Tua', 'wajib' => false],
-            ['nama' => 'Masyarakat', 'wajib' => false],
-        ])->map(fn ($k) => (object) $k);
+        $periode = DB::table('survei')
+            ->where('status', 'Aktif')
+            ->whereNull('deleted_at')
+            ->orderByDesc('survei_id')
+            ->select(
+                'semester',
+                'tahun_ajaran',
+                'tanggal_selesai as selesai'
+            )
+            ->first();
+
+        $kategori = DB::table('kategori_responden')
+            ->select('kategori_id', 'nama', 'wajib')
+            ->orderBy('kategori_id')
+            ->get();
 
         return view('survei.welcome', compact('periode', 'kategori'));
     }
