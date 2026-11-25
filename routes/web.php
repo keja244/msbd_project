@@ -2,9 +2,18 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\SurveiRole;
-use App\Http\Controllers\Survei\{AspekController, AkunController, AuthController, DashboardController,
-    DirektoriController, HasilController, IsiController, PartisipasiController, PertanyaanController,
-    PeriodeController, WelcomeController};
+use App\Http\Controllers\Survei\{
+    AkunController,
+    AuthController,
+    DashboardController,
+    HasilController,
+    IsiController,
+    PartisipasiController,
+    PertanyaanController,
+    PeriodeController,
+    AspekController,
+    WelcomeController
+};
 use Illuminate\Support\Facades\Route;
 
 // --- HALAMAN UTAMA & PROFIL ---
@@ -92,57 +101,55 @@ Route::get('/kontak', function () {
     return view('kontak');
 });
 
+
 // --- SURVEI KEPUASAN ---
-// Role session: admin, kepsek, humas, kurikulum, sarpras, kesiswaan, siswa, guru, tendik, tamu
 Route::prefix('survei')->name('survei.')->group(function () {
 
-    // Publik
+    // Halaman publik
     Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
-    
-    Route::middleware(SurveiRole::class.':guru_tendik')->group(function () {
-    });
 
-    // Masuk / tamu / keluar (formnya ada di halaman welcome)
+    // Login, tamu, dan logout
     Route::post('/masuk', [AuthController::class, 'login'])->name('masuk.proses');
     Route::post('/tamu', [AuthController::class, 'tamu'])->name('tamu.proses');
     Route::post('/keluar', [AuthController::class, 'logout'])->name('keluar');
 
-    // Responden: siswa, guru, tendik, tamu
+    // Halaman responden
     Route::middleware(SurveiRole::class.':siswa,guru,tendik,tamu')->group(function () {
         Route::get('/isi', [IsiController::class, 'index'])->name('isi');
         Route::post('/isi', [IsiController::class, 'store'])->name('isi.simpan');
         Route::get('/terima-kasih', [IsiController::class, 'selesai'])->name('selesai');
     });
 
-    // Pengelola
+    // Dashboard pengelola
     Route::prefix('dashboard')->name('dashboard.')->group(function () {
 
-        // semua pengelola (hasil dibatasi per aspek sesuai role nanti)
+        // Semua pengelola
         Route::middleware(SurveiRole::class.':admin,kepsek,humas,kurikulum,sarpras,kesiswaan')->group(function () {
             Route::get('/', [DashboardController::class, 'index'])->name('index');
             Route::get('/hasil', [HasilController::class, 'index'])->name('hasil');
             Route::get('/hasil/{aspek}', [HasilController::class, 'show'])->name('hasil.aspek');
         });
 
-        // partisipasi dan rata-rata skor: admin, kepsek, humas
+        // Partisipasi
         Route::middleware(SurveiRole::class.':admin,kepsek,humas')->group(function () {
             Route::get('/partisipasi', [PartisipasiController::class, 'index'])->name('partisipasi');
         });
 
-        // pelaksanaan survei: admin, humas
-        Route::middleware(SurveiRole::class.':admin,humas')->group(function () {
+        // Periode dan Aspek, khusus Super Admin
+        Route::middleware(SurveiRole::class.':admin')->group(function () {
             Route::resource('periode', PeriodeController::class)->except(['show']);
+            Route::resource('aspek', AspekController::class)->except(['show']);
+            Route::resource('akun', AkunController::class)->except(['show']);
+        });
+
+        // Pertanyaan untuk pengelola masing-masing divisi
+        Route::middleware(SurveiRole::class.':admin,humas,kurikulum,sarpras,kesiswaan')->group(function () {
             Route::resource('pertanyaan', PertanyaanController::class)->except(['show']);
         });
 
-        // pengelolaan data: admin saja
-        Route::middleware(SurveiRole::class.':admin')->group(function () {
-            Route::resource('aspek', AspekController::class)->except(['show']);
-            Route::resource('direktori', DirektoriController::class)->except(['show']);
-            Route::resource('akun', AkunController::class)->only(['index', 'update', 'destroy']);
-        });
     });
 });
+
 
 // --- DASHBOARD & PROFILE BAWAAN BREEZE ---
 Route::get('/dashboard', function () {

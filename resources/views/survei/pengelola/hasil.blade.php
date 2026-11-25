@@ -1,4 +1,4 @@
-@extends('survei.dashboard.layout')
+@extends('survei.layout.utama')
 
 @section('title', 'Hasil Survei - SMAN 2 Medan')
 
@@ -7,7 +7,7 @@
   <div class="text-smanda-red text-xs font-bold uppercase tracking-[0.15em] mb-2">Hasil Survei</div>
   <h1 class="text-[1.75rem] sm:text-[2.5rem] font-extrabold leading-[1.15] mb-2">Rata-rata <span class="text-smanda-yellow">per Aspek</span></h1>
   <p class="text-sm text-gray-500 dark:text-gray-400">
-    {{ $semester }} · skala 1 sampai 5 · tren dibanding semester lalu
+    {{ $semester }} · skala 1 sampai 4 · tren dibanding semester lalu
     @unless($rinci) · tampilan humas: hanya rata-rata per aspek @endunless
   </p>
 </section>

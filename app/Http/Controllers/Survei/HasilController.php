@@ -41,10 +41,19 @@ class HasilController extends Controller
                 )
                 ->groupBy('a.aspek_id', 'a.nama_aspek', 'a.bersama')
                 ->orderBy('a.aspek_id')
-                ->get();
+                ->get()
+                ->map(function ($item) {
+                    return [
+                        'nama' => $item->nama_aspek,
+                        'bersama' => $item->bersama,
+                        'rata' => $item->rata,
+                        'delta' => null,
+                        'slug' => $item->aspek_id,
+                    ];
+                });
         }
 
-        return view('survei.dashboard.hasil', [
+        return view('survei.pengelola.hasil', [
             'periode' => $periode,
             'semester' => $periode
                 ? $periode->tahun_ajaran . ' · Semester ' . $periode->semester

@@ -11,6 +11,6 @@ class SurveiController extends Controller
         $periode = DB::table('periode')->where('status', 'buka')->first();
         $kategori = DB::table('kategori_responden')->orderByDesc('wajib')->orderBy('id')->get();
 
-        return view('survei.welcome', compact('periode', 'kategori'));
+        return view('survei.publik.welcome', compact('periode', 'kategori'));
     }
 }
