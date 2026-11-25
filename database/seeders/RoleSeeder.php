@@ -20,7 +20,6 @@ class RoleSeeder extends Seeder
             [6, 'Ekstrakulikuler', 'Mengelola kegiatan, prestasi, dan berita yang berkaitan dengan kegiatan ekstrakurikuler sekolah.'],
             [7, 'Guru dan Tendik', 'Memiliki akses untuk melihat halaman website sekolah, mengisi survei, serta melihat hasil survei yang telah dipublikasikan oleh pengelola.'],
             [8, 'Siswa', 'Memiliki akses untuk melihat halaman website sekolah, mengisi survei, serta melihat hasil survei yang telah dipublikasikan oleh pengelola.'],
-            [9, 'Masyarakat', 'Memiliki akses untuk melihat halaman website sekolah, mengisi survei, serta melihat hasil survei yang telah dipublikasikan oleh pengelola.'],
         ];
 
         foreach ($roles as [$id, $nama, $deskripsi]) {

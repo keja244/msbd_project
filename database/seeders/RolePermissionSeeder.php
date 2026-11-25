@@ -20,7 +20,6 @@ class RolePermissionSeeder extends Seeder
             6 => [13, 19, 20, 21],                          // Ekstrakurikuler
             7 => [21, 22, 23],                              // Guru dan Tendik
             8 => [21, 22, 23],                              // Siswa
-            9 => [21, 22, 23],                              // Masyarakat
         ];
 
         foreach ($akses as $roleId => $permissionIds) {

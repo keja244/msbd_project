@@ -7,7 +7,7 @@
     <div class="text-smanda-green text-xs font-bold uppercase tracking-wider mb-2">
         Sistem Survei & Manajemen Fasilitas
     </div>
-
+<!--  -->
     <h1 class="text-3xl font-extrabold mb-2 text-gray-800 dark:text-gray-100">
         Dashboard Sarana & Prasarana
     </h1>

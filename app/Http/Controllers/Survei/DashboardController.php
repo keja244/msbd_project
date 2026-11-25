@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Survei;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Survei\DataHasil;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -18,35 +19,8 @@ class DashboardController extends Controller
             ->orderByDesc('survei_id')
             ->first();
 
-        $jumlahPertanyaan = 0;
-        $jumlahPartisipasi = 0;
-        $jumlahJawaban = 0;
-
-        if ($periode) {
-            $jumlahPertanyaan = DB::table('pertanyaan')
-                ->where('survei_id', $periode->survei_id)
-                ->where('aktif', 1)
-                ->whereNull('deleted_at')
-                ->count();
-
-            $jumlahPartisipasi = DB::table('partisipasi')
-                ->where('survei_id', $periode->survei_id)
-                ->count();
-
-            $jumlahJawaban = DB::table('jawaban')
-                ->where('survei_id', $periode->survei_id)
-                ->count();
-        }
-
-<<<<<<< HEAD
         // Dashboard khusus Sarpras
         if ($role === 'sarpras') {
-            $periode = DB::table('survei')
-                ->where('status', 'Aktif')
-                ->whereNull('deleted_at')
-                ->orderByDesc('survei_id')
-                ->first();
-
             $jumlahFasilitas = DB::table('sarana_prasarana')
                 ->whereNull('deleted_at')
                 ->count();
@@ -87,13 +61,15 @@ class DashboardController extends Controller
                 ->take(4)
                 ->get();
 
-            $pertanyaanList = $periode ? DB::table('pertanyaan')
-                ->where('survei_id', $periode->survei_id)
-                ->where('aspek_id', 4)
-                ->whereNull('deleted_at')
-                ->orderBy('urutan')
-                ->take(4)
-                ->get() : collect();
+            $pertanyaanList = $periode
+                ? DB::table('pertanyaan')
+                    ->where('survei_id', $periode->survei_id)
+                    ->where('aspek_id', 4)
+                    ->whereNull('deleted_at')
+                    ->orderBy('urutan')
+                    ->take(4)
+                    ->get()
+                : collect();
 
             return view('survei.dashboard.sarpras', compact(
                 'periode',
@@ -106,31 +82,48 @@ class DashboardController extends Controller
             ));
         }
 
-        // Dashboard untuk role lainnya tetap menggunakan DataHasil
-        $aspek = collect(DataHasil::untukRole($role))
-            ->filter(fn ($a) => $a['rata'] !== null)
-            ->sortByDesc('rata')
-            ->values();
+        // Dashboard untuk role pengelola lainnya
+        $jumlahPertanyaan = 0;
+        $jumlahPartisipasi = 0;
+        $jumlahJawaban = 0;
 
-        return view('survei.dashboard.index', [
+        if ($periode) {
+            $jumlahPertanyaan = DB::table('pertanyaan')
+                ->where('survei_id', $periode->survei_id)
+                ->where('aktif', 1)
+                ->whereNull('deleted_at')
+                ->count();
+
+            $jumlahPartisipasi = DB::table('partisipasi')
+                ->where('survei_id', $periode->survei_id)
+                ->count();
+
+            $jumlahJawaban = DB::table('jawaban')
+                ->where('survei_id', $periode->survei_id)
+                ->count();
+        }
+
+        $aspek = class_exists(DataHasil::class)
+            ? collect(DataHasil::untukRole($role))
+                ->filter(fn ($a) => $a['rata'] !== null)
+                ->sortByDesc('rata')
+                ->values()
+            : collect();
+
+        return view('survei.pengelola.index', [
             'role' => $role,
-            'semester' => DataHasil::SEMESTER,
+            'periode' => $periode,
+            'jumlahPertanyaan' => $jumlahPertanyaan,
+            'jumlahPartisipasi' => $jumlahPartisipasi,
+            'jumlahJawaban' => $jumlahJawaban,
+            'semester' => defined(DataHasil::class.'::SEMESTER') ? DataHasil::SEMESTER : null,
             'rataAll' => round($aspek->avg('rata'), 1),
             'jumlahAspek' => $aspek->count(),
             'tertinggi' => $aspek->take(3),
             'terendah' => $aspek->reverse()->take(3)->values(),
             'lihatPartisipasi' => in_array($role, ['admin', 'kepsek', 'humas'], true),
-            'partisipasi' => DataHasil::partisipasi(),
-            'total' => DataHasil::partisipasiTotal(),
+            'partisipasi' => class_exists(DataHasil::class) ? DataHasil::partisipasi() : collect(),
+            'total' => class_exists(DataHasil::class) ? DataHasil::partisipasiTotal() : 0,
         ]);
-=======
-        return view('survei.pengelola.index', compact(
-            'role',
-            'periode',
-            'jumlahPertanyaan',
-            'jumlahPartisipasi',
-            'jumlahJawaban'
-        ));
->>>>>>> main
     }
 }

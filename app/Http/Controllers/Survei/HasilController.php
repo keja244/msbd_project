@@ -33,7 +33,6 @@ class HasilController extends Controller
                 ->where('p.survei_id', $periode->survei_id)
                 ->where('p.jenis', 'Skala')
                 ->where('p.aktif', 1)
-<<<<<<< HEAD
                 ->whereNull('p.deleted_at');
 
             // HANYA aspek sarpras jika role adalah sarpras
@@ -48,9 +47,20 @@ class HasilController extends Controller
                 DB::raw('ROUND(AVG(j.skor), 2) as rata'),
                 DB::raw('COUNT(j.jawaban_id) as jumlah_jawaban')
             )
-            ->groupBy('a.aspek_id', 'a.nama_aspek', 'a.bersama')
-            ->orderBy('a.aspek_id')
-            ->get();
+                ->groupBy('a.aspek_id', 'a.nama_aspek', 'a.bersama')
+                ->orderBy('a.aspek_id')
+                ->get()
+                ->map(function ($item) {
+                    return [
+                        'aspek_id' => $item->aspek_id,
+                        'nama' => $item->nama_aspek,
+                        'bersama' => $item->bersama,
+                        'rata' => $item->rata,
+                        'jumlah_jawaban' => $item->jumlah_jawaban,
+                        'delta' => null,
+                        'slug' => $item->aspek_id,
+                    ];
+                });
 
             // Detail per butir pertanyaan untuk Sarpras
             if ($role === 'sarpras') {
@@ -95,36 +105,11 @@ class HasilController extends Controller
             }
         }
 
-        return view('survei.dashboard.hasil', [
-            'role' => $role,
-=======
-                ->whereNull('p.deleted_at')
-                ->select(
-                    'a.aspek_id',
-                    'a.nama_aspek',
-                    'a.bersama',
-                    DB::raw('ROUND(AVG(j.skor), 2) as rata'),
-                    DB::raw('COUNT(j.jawaban_id) as jumlah_jawaban')
-                )
-                ->groupBy('a.aspek_id', 'a.nama_aspek', 'a.bersama')
-                ->orderBy('a.aspek_id')
-                ->get()
-                ->map(function ($item) {
-                    return [
-                        'nama' => $item->nama_aspek,
-                        'bersama' => $item->bersama,
-                        'rata' => $item->rata,
-                        'delta' => null,
-                        'slug' => $item->aspek_id,
-                    ];
-                });
-        }
-
         return view('survei.pengelola.hasil', [
->>>>>>> main
+            'role' => $role,
             'periode' => $periode,
             'semester' => $periode
-                ? $periode->tahun_ajaran . ' · Semester ' . $periode->semester
+                ? $periode->tahun_ajaran.' · Semester '.$periode->semester
                 : null,
             'aspek' => $aspek,
             'pertanyaanSarpras' => $pertanyaanSarpras,

@@ -1,4 +1,4 @@
-@extends('survei.layout.utama')
+@extends('survei.dashboard.layout')
 
 @section('title', 'Hasil Survei - SMAN 2 Medan')
 
@@ -11,7 +11,7 @@
       Hasil Survei
     @endif
   </div>
-
+<!--  -->
   <h1 class="text-[1.75rem] sm:text-[2.5rem] font-extrabold leading-[1.15] mb-2">
     @if(($role ?? session('survei.role')) === 'sarpras')
       Hasil Evaluasi <span class="text-smanda-yellow">Aspek Sarana & Prasarana</span>
@@ -21,17 +21,12 @@
   </h1>
 
   <p class="text-sm text-gray-500 dark:text-gray-400">
-<<<<<<< HEAD:resources/views/survei/dashboard/hasil.blade.php
     @if(($role ?? session('survei.role')) === 'sarpras')
       {{ $semester ?? 'Periode Aktif' }} · Skala 1 sampai 5 · Menampilkan evaluasi khusus aspek sarana dan prasarana dari database
     @else
       {{ $semester ?? 'Periode Aktif' }} · Skala 1 sampai 5 · Tren dibanding semester lalu
       @unless($rinci ?? false) · Tampilan ringkas rata-rata per aspek @endunless
     @endif
-=======
-    {{ $semester }} · skala 1 sampai 4 · tren dibanding semester lalu
-    @unless($rinci) · tampilan humas: hanya rata-rata per aspek @endunless
->>>>>>> main:resources/views/survei/pengelola/hasil.blade.php
   </p>
 </section>
 
@@ -53,11 +48,12 @@
     <tbody>
       @forelse($aspek as $a)
         @php
-          $nama = is_array($a) ? $a['nama'] : ($a->nama_aspek ?? '-');
-          $rata = is_array($a) ? $a['rata'] : ($a->rata ?? null);
+          $nama = is_array($a) ? ($a['nama'] ?? $a['nama_aspek'] ?? '-') : ($a->nama_aspek ?? '-');
+          $rata = is_array($a) ? ($a['rata'] ?? null) : ($a->rata ?? null);
           $bersama = is_array($a) ? ($a['bersama'] ?? false) : ($a->bersama ?? false);
-          $delta = is_array($a) ? ($a['delta'] ?? null) : null;
-          $jumlah = is_array($a) ? ($a['jumlah'] ?? '-') : ($a->jumlah_jawaban ?? 0);
+          $jumlah = is_array($a)
+              ? ($a['jumlah_jawaban'] ?? $a['jumlah'] ?? 0)
+              : ($a->jumlah_jawaban ?? 0);
 
           $warnaBg = match(true) {
             $rata >= 4.0 => 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300',

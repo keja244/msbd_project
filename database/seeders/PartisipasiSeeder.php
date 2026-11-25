@@ -96,7 +96,7 @@ class PartisipasiSeeder extends Seeder
                 'saran' => $saranGuru[$surveiId],
             ]);
 
-            // 1 responden orang tua/wali (anonim)
+            // 1 responden orang tua/wali (anonim, kategori 3)
             [$nama, $noHp, $saran] = $orangTua[$surveiId];
             DB::table('partisipasi')->insert([
                 'partisipasi_id' => $id++,
@@ -114,12 +114,12 @@ class PartisipasiSeeder extends Seeder
                 'saran' => $saran,
             ]);
 
-            // 1 responden masyarakat (anonim)
+            // 1 responden masyarakat (anonim, kategori 3 yang sama dengan orang tua/wali; dibedakan oleh jenis_responden_eksternal)
             [$nama, $noHp, $saran] = $masyarakat[$surveiId];
             DB::table('partisipasi')->insert([
                 'partisipasi_id' => $id++,
                 'survei_id' => $surveiId,
-                'kategori_id' => 4,
+                'kategori_id' => 3,
                 'siswa_id' => null,
                 'tanggal_isi' => $waktu[5],
                 'ip_address' => $ip . '40',

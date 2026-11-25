@@ -27,7 +27,6 @@ class UserSeeder extends Seeder
             [6, 6, 'ekstrakurikuler', 'ekstrakurikuler@sekolah.sch.id', 'Admin Ekstrakurikuler', '2026-11-21 00:48:14', '2026-11-21 01:01:13'],
             [7, 7, 'guru_tendik', 'guru@sekolah.sch.id', 'Guru dan Tenaga Kependidikan', '2026-11-21 00:48:14', '2026-11-21 01:01:13'],
             [8, 8, 'siswa', 'siswa@sekolah.sch.id', 'Pengguna Siswa', '2026-11-21 00:48:14', '2026-11-21 01:01:13'],
-            [9, 9, 'masyarakat', 'masyarakat@sekolah.sch.id', 'Pengguna Masyarakat', '2026-11-21 00:48:14', '2026-11-21 01:01:13'],
         ];
 
         foreach ($users as [$id, $roleId, $username, $email, $nama, $createdAt, $updatedAt]) {

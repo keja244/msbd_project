@@ -14,7 +14,7 @@ class PasswordResetTokenSeeder extends Seeder
         $token = [
             [7, 72, true],
             [8, 48, true],
-            [9, 30, false],
+            [3, 30, false],
             [2, 5, false],
             [4, 1, false],
         ];

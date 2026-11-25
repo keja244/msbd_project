@@ -1,26 +1,19 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Survei\AkunController;
+use App\Http\Controllers\Survei\AspekController;
+use App\Http\Controllers\Survei\AuthController;
+use App\Http\Controllers\Survei\DashboardController;
+use App\Http\Controllers\Survei\HasilController;
+use App\Http\Controllers\Survei\IsiController;
+use App\Http\Controllers\Survei\PartisipasiController;
+use App\Http\Controllers\Survei\PeriodeController;
+use App\Http\Controllers\Survei\PertanyaanController;
+use App\Http\Controllers\Survei\SarprasController;
+use App\Http\Controllers\Survei\WelcomeController;
 use App\Http\Middleware\SurveiRole;
-<<<<<<< HEAD
-use App\Http\Controllers\Survei\{AuthController, DashboardController,
-    HasilController, IsiController, PartisipasiController,
-    SarprasController, WelcomeController};
 use Illuminate\Support\Facades\DB;
-=======
-use App\Http\Controllers\Survei\{
-    AkunController,
-    AuthController,
-    DashboardController,
-    HasilController,
-    IsiController,
-    PartisipasiController,
-    PertanyaanController,
-    PeriodeController,
-    AspekController,
-    WelcomeController
-};
->>>>>>> main
 use Illuminate\Support\Facades\Route;
 
 // --- HALAMAN UTAMA & PROFIL ---
@@ -40,6 +33,7 @@ Route::prefix('profil')->group(function () {
             ->whereNull('deleted_at')
             ->orderBy('sarpras_id')
             ->get();
+
         return view('profil-sekolah.sarpras', compact('fasilitas'));
     });
     Route::get('/osis', function () {
@@ -112,7 +106,6 @@ Route::get('/kontak', function () {
     return view('kontak');
 });
 
-
 // --- SURVEI KEPUASAN ---
 Route::prefix('survei')->name('survei.')->group(function () {
 
@@ -141,8 +134,7 @@ Route::prefix('survei')->name('survei.')->group(function () {
             Route::get('/hasil/{aspek}', [HasilController::class, 'show'])->name('hasil.aspek');
         });
 
-<<<<<<< HEAD
-        // fasilitas & pertanyaan survei aspek sarpras: sarpras, admin
+        // Fasilitas & pertanyaan survei aspek sarpras: sarpras, admin
         Route::middleware(SurveiRole::class.':sarpras,admin')->prefix('sarpras')->name('sarpras.')->group(function () {
             Route::get('/fasilitas', [SarprasController::class, 'index'])->name('index');
             Route::get('/fasilitas/tambah', [SarprasController::class, 'create'])->name('create');
@@ -159,44 +151,24 @@ Route::prefix('survei')->name('survei.')->group(function () {
             Route::delete('/pertanyaan/{id}', [SarprasController::class, 'pertanyaanDestroy'])->name('pertanyaan.destroy');
         });
 
-        // partisipasi dan rata-rata skor: admin, kepsek, humas
-=======
-        // Partisipasi
->>>>>>> main
+        // Partisipasi dan rata-rata skor: admin, kepsek, humas
         Route::middleware(SurveiRole::class.':admin,kepsek,humas')->group(function () {
             Route::get('/partisipasi', [PartisipasiController::class, 'index'])->name('partisipasi');
         });
 
-<<<<<<< HEAD
-        // pelaksanaan survei: admin, humas (belum diimplementasi)
-        // Route::middleware(SurveiRole::class.':admin,humas')->group(function () {
-        //     Route::resource('periode', PeriodeController::class)->except(['show']);
-        //     Route::resource('pertanyaan', PertanyaanController::class)->except(['show']);
-        // });
-
-        // pengelolaan data: admin saja (belum diimplementasi)
-        // Route::middleware(SurveiRole::class.':admin')->group(function () {
-        //     Route::resource('aspek', AspekController::class)->except(['show']);
-        //     Route::resource('direktori', DirektoriController::class)->except(['show']);
-        //     Route::resource('akun', AkunController::class)->only(['index', 'update', 'destroy']);
-        // });
-=======
-        // Periode dan Aspek, khusus Super Admin
+        // Periode, Aspek, dan Akun: khusus admin
         Route::middleware(SurveiRole::class.':admin')->group(function () {
             Route::resource('periode', PeriodeController::class)->except(['show']);
             Route::resource('aspek', AspekController::class)->except(['show']);
             Route::resource('akun', AkunController::class)->except(['show']);
         });
 
-        // Pertanyaan untuk pengelola masing-masing divisi
+        // Pertanyaan untuk pengelola divisi
         Route::middleware(SurveiRole::class.':admin,humas,kurikulum,sarpras,kesiswaan')->group(function () {
             Route::resource('pertanyaan', PertanyaanController::class)->except(['show']);
         });
-
->>>>>>> main
     });
 });
-
 
 // --- DASHBOARD & PROFILE BAWAAN BREEZE ---
 Route::get('/dashboard', function () {

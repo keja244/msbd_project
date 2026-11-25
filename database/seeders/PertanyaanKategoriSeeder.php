@@ -9,12 +9,11 @@ class PertanyaanKategoriSeeder extends Seeder
 {
     public function run(): void
     {
-        // Kategori responden: 1 = Siswa Aktif, 2 = Guru dan Tendik, 3 = Orang Tua/Wali, 4 = Masyarakat Umum
-        // Aspek Sarana Prasarana (4) dan Layanan (1) dapat dinilai semua kategori responden.
-        // Aspek Kurikulum (7) dan Kesiswaan (5) dinilai warga sekolah dan orang tua/wali.
+        // Kategori responden: 1 = Siswa Aktif, 2 = Guru dan Tendik, 3 = Orang Tua/Wali dan Masyarakat
+        // Seluruh aspek dapat dinilai oleh ketiga kategori responden tersebut.
         $kategoriPerAspek = [
-            4 => [1, 2, 3, 4],
-            1 => [1, 2, 3, 4],
+            4 => [1, 2, 3],
+            1 => [1, 2, 3],
             7 => [1, 2, 3],
             5 => [1, 2, 3],
         ];
