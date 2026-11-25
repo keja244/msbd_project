@@ -127,13 +127,11 @@
               <input type="hidden" name="mode" value="tamu">
               <div class="mb-4">
                 <label for="kategori" class="block text-xs font-bold mb-1.5">Saya adalah</label>
-              <select id="kategori" name="kategori" required
-                  class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-transparent dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-smanda-green">
-
-                  <option value="3" @selected(old('kategori') == '3')>
-                      Masyarakat / Orang Tua
-                  </option>
-              </select>
+                  <select id="kategori" name="kategori" required
+                      class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-transparent dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-smanda-green">
+                      <option value="orang_tua">Orang Tua/Wali</option>
+                      <option value="masyarakat">Masyarakat</option>
+                  </select>
               </div>
               <div class="mb-4">
                 <label for="nama" class="block text-xs font-bold mb-1.5">Nama</label>
@@ -223,29 +221,36 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    const usernameInput = document.getElementById('username');
-    const pilihanJabatan = document.getElementById('pilihan-jabatan');
+      const tabs = document.querySelectorAll('.sv-tab');
+      const panes = document.querySelectorAll('.sv-pane');
 
-    if (!usernameInput || !pilihanJabatan) return;
+      function tampilkanPane(target) {
+          tabs.forEach(function (tab) {
+              const aktif = tab.dataset.pane === target;
 
-    function cekUsername() {
-        const username = usernameInput.value.trim().toLowerCase();
-        const isGuruTendik = username === 'guru_tendik';
+              tab.classList.toggle('bg-white', aktif);
+              tab.classList.toggle('dark:bg-gray-700', aktif);
+              tab.classList.toggle('text-gray-900', aktif);
+              tab.classList.toggle('dark:text-white', aktif);
+              tab.classList.toggle('shadow-sm', aktif);
 
-        pilihanJabatan.classList.toggle('hidden', !isGuruTendik);
+              tab.classList.toggle('text-gray-500', !aktif);
+              tab.classList.toggle('dark:text-gray-400', !aktif);
+          });
 
-        pilihanJabatan.querySelectorAll('input').forEach(function (input) {
-            input.required = isGuruTendik;
+          panes.forEach(function (pane) {
+              pane.classList.toggle('hidden', pane.id !== 'pane-' + target);
+          });
+      }
 
-            if (!isGuruTendik) {
-                input.checked = false;
-            }
-        });
-    }
+      tabs.forEach(function (tab) {
+          tab.addEventListener('click', function () {
+              tampilkanPane(tab.dataset.pane);
+          });
+      });
 
-    usernameInput.addEventListener('input', cekUsername);
-    cekUsername();
-});
+      tampilkanPane(@json(old('mode') === 'tamu' ? 'tamu' : 'akun'));
+  });
 </script>
 
 @endsection

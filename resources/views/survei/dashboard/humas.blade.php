@@ -1,5 +1,5 @@
 
-@extends('survei.dashboard.layout')
+@extends('survei.layout.utama')
 
 @section('title', 'Dashboard Humas - SMAN 2 Medan')
 

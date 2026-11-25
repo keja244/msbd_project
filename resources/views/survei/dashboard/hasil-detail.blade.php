@@ -1,4 +1,4 @@
-@extends('survei.dashboard.layout')
+@extends('survei.layout.utama')
 
 @section('title', $a['nama'].' - Hasil Survei')
 

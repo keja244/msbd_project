@@ -5,6 +5,7 @@
   <main class="max-w-[1200px] mx-auto px-[16px] sm:px-[24px]">
 
     @php
+<<<<<<< HEAD
       $role = session('survei.role');
       $menu = [['Ringkasan', 'survei.dashboard.index']];
       if (in_array($role, ['sarpras', 'admin'], true)) {
@@ -15,6 +16,23 @@
       if (in_array($role, ['admin', 'kepsek', 'humas'], true)) {
           $menu[] = ['Partisipasi', 'survei.dashboard.partisipasi'];
       }
+=======
+        $role = session('survei.role');
+
+        $menu = [
+            ['Ringkasan', 'survei.dashboard.index'],
+            ['Hasil', 'survei.dashboard.hasil'],
+        ];
+
+        if (in_array($role, ['admin', 'kepsek', 'humas'], true)) {
+            $menu[] = ['Partisipasi', 'survei.dashboard.partisipasi'];
+        }
+
+        if (in_array($role, ['admin', 'humas'], true)) {
+            $menu[] = ['Periode', 'survei.dashboard.periode.index'];
+            $menu[] = ['Pertanyaan', 'survei.dashboard.pertanyaan.index'];
+        }
+>>>>>>> main
     @endphp
 
     

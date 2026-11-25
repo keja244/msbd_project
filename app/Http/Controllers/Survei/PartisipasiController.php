@@ -42,7 +42,7 @@ class PartisipasiController extends Controller
             $total['terisi'] = $partisipasi->sum('terisi');
         }
 
-        return view('survei.dashboard.partisipasi', [
+        return view('survei.pengelola.partisipasi', [
             'periode' => $periode,
             'semester' => $periode
                 ? $periode->tahun_ajaran . ' · Semester ' . $periode->semester

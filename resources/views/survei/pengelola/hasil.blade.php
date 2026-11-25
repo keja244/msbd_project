@@ -1,4 +1,4 @@
-@extends('survei.dashboard.layout')
+@extends('survei.layout.utama')
 
 @section('title', 'Hasil Survei - SMAN 2 Medan')
 
@@ -21,12 +21,17 @@
   </h1>
 
   <p class="text-sm text-gray-500 dark:text-gray-400">
+<<<<<<< HEAD:resources/views/survei/dashboard/hasil.blade.php
     @if(($role ?? session('survei.role')) === 'sarpras')
       {{ $semester ?? 'Periode Aktif' }} · Skala 1 sampai 5 · Menampilkan evaluasi khusus aspek sarana dan prasarana dari database
     @else
       {{ $semester ?? 'Periode Aktif' }} · Skala 1 sampai 5 · Tren dibanding semester lalu
       @unless($rinci ?? false) · Tampilan ringkas rata-rata per aspek @endunless
     @endif
+=======
+    {{ $semester }} · skala 1 sampai 4 · tren dibanding semester lalu
+    @unless($rinci) · tampilan humas: hanya rata-rata per aspek @endunless
+>>>>>>> main:resources/views/survei/pengelola/hasil.blade.php
   </p>
 </section>
 
