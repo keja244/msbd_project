@@ -14,7 +14,6 @@ class AuthController extends Controller
         $data = $request->validate([
             'username' => 'required|string',
             'password' => 'required|string',
-            'jabatan' => 'nullable|in:guru,tendik',
         ]);
 
         $user = DB::table('users')
@@ -39,7 +38,7 @@ class AuthController extends Controller
                     'username' => 'Username atau password salah.',
                 ]);
         }
-        
+
         $role = match ($user->nama_role) {
             'Super Admin' => 'admin',
             'Humas' => 'humas',
@@ -53,14 +52,6 @@ class AuthController extends Controller
             default => null,
         };
 
-        if ($role === 'guru_tendik' && empty($data['jabatan'])) {
-            return back()
-                ->withInput($request->only('username'))
-                ->withErrors([
-                    'jabatan' => 'Silakan pilih jabatan Guru atau Tendik.',
-                ]);
-        }
-
         if (! $role) {
             return back()
                 ->withInput($request->only('username'))
@@ -69,18 +60,28 @@ class AuthController extends Controller
                 ]);
         }
 
+        if ($role === 'guru_tendik') {
+            $role = $this->roleGuruTendik($user->user_id);
+
+            if (! $role) {
+                return back()
+                    ->withInput($request->only('username'))
+                    ->withErrors([
+                        'username' => 'Data jabatan Guru atau Tendik tidak ditemukan.',
+                    ]);
+            }
+        }
+
         $request->session()->regenerate();
 
         $request->session()->put([
             'survei.user_id' => $user->user_id,
             'survei.username' => $user->username,
             'survei.nama' => $user->nama_lengkap,
-            'survei.role' => $role === 'guru_tendik'
-                ? $data['jabatan']
-                : $role,
+            'survei.role' => $role,
         ]);
 
-        return in_array($role, ['siswa', 'guru_tendik'], true)
+        return in_array($role, ['siswa', 'guru', 'tendik'], true)
             ? redirect()->route('survei.isi')
             : redirect()->route('survei.dashboard.index');
     }
@@ -104,16 +105,22 @@ class AuthController extends Controller
     public function tamu(Request $request)
     {
         $data = $request->validate([
-            'kategori' => 'required|in:3',
+            'kategori' => 'required|in:orang_tua,masyarakat',
             'nama' => 'required|string|max:100',
             'kontak' => 'required|string|max:20',
         ]);
+
+        $jenisResponden = match ($data['kategori']) {
+            'orang_tua' => 'Orang Tua/Wali',
+            'masyarakat' => 'Masyarakat',
+        };
 
         $request->session()->regenerate();
 
         $request->session()->put([
             'survei.role' => 'tamu',
             'survei.kategori' => 3,
+            'survei.jenis_responden_eksternal' => $jenisResponden,
             'survei.nama' => $data['nama'],
             'survei.kontak' => $data['kontak'],
         ]);
@@ -130,7 +137,8 @@ class AuthController extends Controller
             'survei.kontak',
             'survei.role',
             'survei.kategori',
-            'survei.selesai',
+            'survei.jenis_responden_eksternal',
+            'survei.responden.selesai',
             'survei.jawaban',
         ]);
 

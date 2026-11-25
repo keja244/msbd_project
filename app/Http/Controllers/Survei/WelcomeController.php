@@ -25,6 +25,6 @@ class WelcomeController extends Controller
             ->orderBy('kategori_id')
             ->get();
 
-        return view('survei.welcome', compact('periode', 'kategori'));
+        return view('survei.publik.welcome', compact('periode', 'kategori'));
     }
 }
