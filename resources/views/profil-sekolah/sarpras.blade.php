@@ -20,185 +20,75 @@
 
     <!-- GRID DAFTAR RUANGAN / FASILITAS -->
     <section class="max-w-[1280px] mx-auto px-[24px] py-[40px]">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[30px]">
+        @if(isset($fasilitas) && $fasilitas->count() > 0)
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[30px]">
+                @foreach($fasilitas as $item)
+                    @php
+                        $colorClass = match(strtolower($item->kategori)) {
+                            'laboratorium' => 'text-smanda-blue',
+                            'kerohanian' => 'text-smanda-green',
+                            'literasi', 'perpustakaan' => 'text-smanda-yellow dark:text-smanda-yellow',
+                            'olahraga' => 'text-smanda-red',
+                            default => 'text-smanda-green',
+                        };
 
-            <!-- Item 1: Mushola -->
-            <div class="bg-white dark:bg-gray-800 rounded-[16px] overflow-hidden border border-gray-100 dark:border-gray-700 shadow-sm flex flex-col">
-                <div class="relative w-full aspect-[16/10] overflow-hidden bg-gray-100 dark:bg-gray-900">
-                    <img src="{{ asset('images/slide1.jpeg') }}" alt="Mushola Sekolah" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
-                </div>
-                <div class="p-[24px] flex flex-col flex-grow justify-between">
-                    <div>
-                        <span class="text-xs font-bold text-smanda-green uppercase tracking-wider block mb-[6px]">Kerohanian</span>
-                        <h3 class="text-[1.25rem] font-bold text-[#4a5568] dark:text-gray-100 mb-[10px]">Mushola</h3>
-                        <p class="text-[0.92rem] text-[#718096] dark:text-gray-300 font-light leading-[1.7] text-justify">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam nulla nisl, ultrices congue magna dignissim, dictum consectetur dui. Pellentesque habitant morbi tristique senectus et netus.
-                        </p>
+                        $kondisiClass = match($item->kondisi) {
+                            'Baik' => 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800',
+                            'Rusak Ringan' => 'bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-800',
+                            default => 'bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-400 border-red-200 dark:border-red-800',
+                        };
+
+                        $fotoUrl = $item->foto ? asset($item->foto) : asset('images/slide1.jpeg');
+                    @endphp
+
+                    <div class="bg-white dark:bg-gray-800 rounded-[16px] overflow-hidden border border-gray-100 dark:border-gray-700 shadow-sm flex flex-col transition-all duration-300 hover:shadow-md">
+                        <div class="relative w-full aspect-[16/10] overflow-hidden bg-gray-100 dark:bg-gray-900">
+                            <img src="{{ $fotoUrl }}" alt="{{ $item->nama_fasilitas }}"
+                                 class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                                 onerror="this.src='{{ asset('images/slide1.jpeg') }}'">
+                            
+                            @if($item->kondisi)
+                                <div class="absolute top-3 right-3">
+                                    <span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-bold border backdrop-blur-md bg-white/90 dark:bg-gray-800/90 shadow-sm {{ $kondisiClass }}">
+                                        {{ $item->kondisi }}
+                                    </span>
+                                </div>
+                            @endif
+                        </div>
+                        <div class="p-[24px] flex flex-col flex-grow justify-between">
+                            <div>
+                                <div class="flex items-center justify-between gap-2 mb-[6px]">
+                                    <span class="text-xs font-bold {{ $colorClass }} uppercase tracking-wider block">
+                                        {{ $item->kategori }}
+                                    </span>
+                                    @if($item->jumlah)
+                                        <span class="text-xs text-gray-400 font-semibold">
+                                            {{ $item->jumlah }} Unit
+                                        </span>
+                                    @endif
+                                </div>
+                                <h3 class="text-[1.25rem] font-bold text-[#4a5568] dark:text-gray-100 mb-[10px]">
+                                    {{ $item->nama_fasilitas }}
+                                </h3>
+                                <p class="text-[0.92rem] text-[#718096] dark:text-gray-300 font-light leading-[1.7] text-justify">
+                                    {{ $item->deskripsi ?? $item->keterangan }}
+                                </p>
+                            </div>
+
+                            @if($item->keterangan && $item->deskripsi && $item->keterangan !== $item->deskripsi)
+                                <div class="mt-4 pt-3 border-t border-gray-100 dark:border-gray-700/60 text-xs text-gray-500 dark:text-gray-400 italic">
+                                    {{ $item->keterangan }}
+                                </div>
+                            @endif
+                        </div>
                     </div>
-                </div>
+                @endforeach
             </div>
-
-            <!-- Item 2: Laboratorium Komputer -->
-            <div class="bg-white dark:bg-gray-800 rounded-[16px] overflow-hidden border border-gray-100 dark:border-gray-700 shadow-sm flex flex-col">
-                <div class="relative w-full aspect-[16/10] overflow-hidden bg-gray-100 dark:bg-gray-900">
-                    <img src="{{ asset('images/slide2.jpeg') }}" alt="Laboratorium Komputer" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
-                </div>
-                <div class="p-[24px] flex flex-col flex-grow justify-between">
-                    <div>
-                        <span class="text-xs font-bold text-smanda-blue uppercase tracking-wider block mb-[6px]">Laboratorium</span>
-                        <h3 class="text-[1.25rem] font-bold text-[#4a5568] dark:text-gray-100 mb-[10px]">Laboratorium Komputer</h3>
-                        <p class="text-[0.92rem] text-[#718096] dark:text-gray-300 font-light leading-[1.7] text-justify">
-                            Proin pulvinar neque diam, vel semper mi ornare quis. Cras id pretium neque, vel rutrum quam. Integer eget porttitor risus, et pharetra tortor interdum.
-                        </p>
-                    </div>
-                </div>
+        @else
+            <div class="text-center py-16 bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm">
+                <p class="text-gray-500 dark:text-gray-400">Belum ada fasilitas sarana prasarana yang ditambahkan.</p>
             </div>
-
-            <!-- Item 3: Perpustakaan -->
-            <div class="bg-white dark:bg-gray-800 rounded-[16px] overflow-hidden border border-gray-100 dark:border-gray-700 shadow-sm flex flex-col">
-                <div class="relative w-full aspect-[16/10] overflow-hidden bg-gray-100 dark:bg-gray-900">
-                    <img src="{{ asset('images/slide3.jpeg') }}" alt="Perpustakaan Sekolah" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
-                </div>
-                <div class="p-[24px] flex flex-col flex-grow justify-between">
-                    <div>
-                        <span class="text-xs font-bold text-smanda-yellow dark:text-smanda-yellow uppercase tracking-wider block mb-[6px]">Literasi</span>
-                        <h3 class="text-[1.25rem] font-bold text-[#4a5568] dark:text-gray-100 mb-[10px]">Perpustakaan Sekolah</h3>
-                        <p class="text-[0.92rem] text-[#718096] dark:text-gray-300 font-light leading-[1.7] text-justify">
-                            Phasellus eu enim non sapien gravida varius sit amet rhoncus felis. Ut nec sapien at nisl lobortis pharetra. Mauris ultricies eu massa eget rhoncus.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Item 4: Laboratorium Fisika -->
-            <div class="bg-white dark:bg-gray-800 rounded-[16px] overflow-hidden border border-gray-100 dark:border-gray-700 shadow-sm flex flex-col">
-                <div class="relative w-full aspect-[16/10] overflow-hidden bg-gray-100 dark:bg-gray-900">
-                    <img src="{{ asset('images/slide4.jpeg') }}" alt="Laboratorium Fisika" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
-                </div>
-                <div class="p-[24px] flex flex-col flex-grow justify-between">
-                    <div>
-                        <span class="text-xs font-bold text-smanda-blue uppercase tracking-wider block mb-[6px]">Laboratorium</span>
-                        <h3 class="text-[1.25rem] font-bold text-[#4a5568] dark:text-gray-100 mb-[10px]">Laboratorium Fisika</h3>
-                        <p class="text-[0.92rem] text-[#718096] dark:text-gray-300 font-light leading-[1.7] text-justify">
-                            Suspendisse potenti. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nunc gravida nibh vitae metus sollicitudin cursus.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Item 5: Laboratorium Kimia & Biologi -->
-            <div class="bg-white dark:bg-gray-800 rounded-[16px] overflow-hidden border border-gray-100 dark:border-gray-700 shadow-sm flex flex-col">
-                <div class="relative w-full aspect-[16/10] overflow-hidden bg-gray-100 dark:bg-gray-900">
-                    <img src="{{ asset('images/slide1.jpeg') }}" alt="Laboratorium Kimia & Biologi" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
-                </div>
-                <div class="p-[24px] flex flex-col flex-grow justify-between">
-                    <div>
-                        <span class="text-xs font-bold text-smanda-blue uppercase tracking-wider block mb-[6px]">Laboratorium</span>
-                        <h3 class="text-[1.25rem] font-bold text-[#4a5568] dark:text-gray-100 mb-[10px]">Laboratorium Kimia & Biologi</h3>
-                        <p class="text-[0.92rem] text-[#718096] dark:text-gray-300 font-light leading-[1.7] text-justify">
-                            Maecenas justo ex, aliquam imperdiet nibh sit amet, suscipit semper tellus. Quisque et convallis massa, at sagittis risus. Ut nec sapien at nisl lobortis pharetra.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Item 6: Laboratorium Bahasa -->
-            <div class="bg-white dark:bg-gray-800 rounded-[16px] overflow-hidden border border-gray-100 dark:border-gray-700 shadow-sm flex flex-col">
-                <div class="relative w-full aspect-[16/10] overflow-hidden bg-gray-100 dark:bg-gray-900">
-                    <img src="{{ asset('images/slide2.jpeg') }}" alt="Laboratorium Bahasa" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
-                </div>
-                <div class="p-[24px] flex flex-col flex-grow justify-between">
-                    <div>
-                        <span class="text-xs font-bold text-smanda-blue uppercase tracking-wider block mb-[6px]">Laboratorium</span>
-                        <h3 class="text-[1.25rem] font-bold text-[#4a5568] dark:text-gray-100 mb-[10px]">Laboratorium Bahasa</h3>
-                        <p class="text-[0.92rem] text-[#718096] dark:text-gray-300 font-light leading-[1.7] text-justify">
-                            Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Mauris blandit aliquet elit.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Item 7: Lapangan Futsal -->
-            <div class="bg-white dark:bg-gray-800 rounded-[16px] overflow-hidden border border-gray-100 dark:border-gray-700 shadow-sm flex flex-col">
-                <div class="relative w-full aspect-[16/10] overflow-hidden bg-gray-100 dark:bg-gray-900">
-                    <img src="{{ asset('images/slide3.jpeg') }}" alt="Lapangan Futsal" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
-                </div>
-                <div class="p-[24px] flex flex-col flex-grow justify-between">
-                    <div>
-                        <span class="text-xs font-bold text-smanda-red uppercase tracking-wider block mb-[6px]">Olahraga</span>
-                        <h3 class="text-[1.25rem] font-bold text-[#4a5568] dark:text-gray-100 mb-[10px]">Lapangan Futsal</h3>
-                        <p class="text-[0.92rem] text-[#718096] dark:text-gray-300 font-light leading-[1.7] text-justify">
-                            Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Vivamus suscipit tortor eget felis porttitor volutpat. Nulla quis lorem ut libero malesuada feugiat.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Item 8: Lapangan Voli -->
-            <div class="bg-white dark:bg-gray-800 rounded-[16px] overflow-hidden border border-gray-100 dark:border-gray-700 shadow-sm flex flex-col">
-                <div class="relative w-full aspect-[16/10] overflow-hidden bg-gray-100 dark:bg-gray-900">
-                    <img src="{{ asset('images/slide4.jpeg') }}" alt="Lapangan Voli" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
-                </div>
-                <div class="p-[24px] flex flex-col flex-grow justify-between">
-                    <div>
-                        <span class="text-xs font-bold text-smanda-red uppercase tracking-wider block mb-[6px]">Olahraga</span>
-                        <h3 class="text-[1.25rem] font-bold text-[#4a5568] dark:text-gray-100 mb-[10px]">Lapangan Voli</h3>
-                        <p class="text-[0.92rem] text-[#718096] dark:text-gray-300 font-light leading-[1.7] text-justify">
-                            Cras ultricies ligula sed magna dictum porta. Donec sollicitudin molestie malesuada. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Item 9: Lapangan Basket -->
-            <div class="bg-white dark:bg-gray-800 rounded-[16px] overflow-hidden border border-gray-100 dark:border-gray-700 shadow-sm flex flex-col">
-                <div class="relative w-full aspect-[16/10] overflow-hidden bg-gray-100 dark:bg-gray-900">
-                    <img src="{{ asset('images/slide1.jpeg') }}" alt="Lapangan Basket" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
-                </div>
-                <div class="p-[24px] flex flex-col flex-grow justify-between">
-                    <div>
-                        <span class="text-xs font-bold text-smanda-red uppercase tracking-wider block mb-[6px]">Olahraga</span>
-                        <h3 class="text-[1.25rem] font-bold text-[#4a5568] dark:text-gray-100 mb-[10px]">Lapangan Basket</h3>
-                        <p class="text-[0.92rem] text-[#718096] dark:text-gray-300 font-light leading-[1.7] text-justify">
-                            Nulla porttitor accumsan tincidunt. Quisque velit nisi, pretium ut lacinia in, elementum id enim. Set interdum velit laoreet id donec sollicitudin molestie.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Item 10: Aula -->
-            <div class="bg-white dark:bg-gray-800 rounded-[16px] overflow-hidden border border-gray-100 dark:border-gray-700 shadow-sm flex flex-col">
-                <div class="relative w-full aspect-[16/10] overflow-hidden bg-gray-100 dark:bg-gray-900">
-                    <img src="{{ asset('images/slide2.jpeg') }}" alt="Aula Sekolah" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
-                </div>
-                <div class="p-[24px] flex flex-col flex-grow justify-between">
-                    <div>
-                        <span class="text-xs font-bold text-smanda-yellow dark:text-smanda-yellow uppercase tracking-wider block mb-[6px]">Fasilitas Umum</span>
-                        <h3 class="text-[1.25rem] font-bold text-[#4a5568] dark:text-gray-100 mb-[10px]">Aula Serbaguna</h3>
-                        <p class="text-[0.92rem] text-[#718096] dark:text-gray-300 font-light leading-[1.7] text-justify">
-                            Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Curabitur aliquet quam id dui posuere blandit. Vivamus magna justo, lacinia eget consectetur sed.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Item 11: Lobby -->
-            <div class="bg-white dark:bg-gray-800 rounded-[16px] overflow-hidden border border-gray-100 dark:border-gray-700 shadow-sm flex flex-col">
-                <div class="relative w-full aspect-[16/10] overflow-hidden bg-gray-100 dark:bg-gray-900">
-                    <img src="{{ asset('images/slide3.jpeg') }}" alt="Lobby Sekolah" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
-                </div>
-                <div class="p-[24px] flex flex-col flex-grow justify-between">
-                    <div>
-                        <span class="text-xs font-bold text-smanda-green uppercase tracking-wider block mb-[6px]">Area Utama</span>
-                        <h3 class="text-[1.25rem] font-bold text-[#4a5568] dark:text-gray-100 mb-[10px]">Lobby & Resepsionis</h3>
-                        <p class="text-[0.92rem] text-[#718096] dark:text-gray-300 font-light leading-[1.7] text-justify">
-                            Pellentesque in ipsum id orci porta dapibus. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Vestibulum ante ipsum primis in faucibus.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+        @endif
     </section>
 
 </div>

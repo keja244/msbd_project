@@ -2,9 +2,10 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\SurveiRole;
-use App\Http\Controllers\Survei\{AspekController, AkunController, AuthController, DashboardController,
-    DirektoriController, HasilController, IsiController, PartisipasiController, PertanyaanController,
-    PeriodeController, WelcomeController};
+use App\Http\Controllers\Survei\{AuthController, DashboardController,
+    HasilController, IsiController, PartisipasiController,
+    SarprasController, WelcomeController};
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 // --- HALAMAN UTAMA & PROFIL ---
@@ -20,7 +21,11 @@ Route::prefix('profil')->group(function () {
         return view('profil-sekolah.kepala-sekolah');
     });
     Route::get('/sarpras', function () {
-        return view('profil-sekolah.sarpras');
+        $fasilitas = DB::table('sarana_prasarana')
+            ->whereNull('deleted_at')
+            ->orderBy('sarpras_id')
+            ->get();
+        return view('profil-sekolah.sarpras', compact('fasilitas'));
     });
     Route::get('/osis', function () {
         return view('profil-sekolah.osis');
@@ -124,23 +129,40 @@ Route::prefix('survei')->name('survei.')->group(function () {
             Route::get('/hasil/{aspek}', [HasilController::class, 'show'])->name('hasil.aspek');
         });
 
+        // fasilitas & pertanyaan survei aspek sarpras: sarpras, admin
+        Route::middleware(SurveiRole::class.':sarpras,admin')->prefix('sarpras')->name('sarpras.')->group(function () {
+            Route::get('/fasilitas', [SarprasController::class, 'index'])->name('index');
+            Route::get('/fasilitas/tambah', [SarprasController::class, 'create'])->name('create');
+            Route::post('/fasilitas', [SarprasController::class, 'store'])->name('store');
+            Route::get('/fasilitas/{id}/edit', [SarprasController::class, 'edit'])->name('edit');
+            Route::put('/fasilitas/{id}', [SarprasController::class, 'update'])->name('update');
+            Route::delete('/fasilitas/{id}', [SarprasController::class, 'destroy'])->name('destroy');
+
+            Route::get('/pertanyaan', [SarprasController::class, 'pertanyaanIndex'])->name('pertanyaan');
+            Route::get('/pertanyaan/tambah', [SarprasController::class, 'pertanyaanCreate'])->name('pertanyaan.create');
+            Route::post('/pertanyaan', [SarprasController::class, 'pertanyaanStore'])->name('pertanyaan.store');
+            Route::get('/pertanyaan/{id}/edit', [SarprasController::class, 'pertanyaanEdit'])->name('pertanyaan.edit');
+            Route::put('/pertanyaan/{id}', [SarprasController::class, 'pertanyaanUpdate'])->name('pertanyaan.update');
+            Route::delete('/pertanyaan/{id}', [SarprasController::class, 'pertanyaanDestroy'])->name('pertanyaan.destroy');
+        });
+
         // partisipasi dan rata-rata skor: admin, kepsek, humas
         Route::middleware(SurveiRole::class.':admin,kepsek,humas')->group(function () {
             Route::get('/partisipasi', [PartisipasiController::class, 'index'])->name('partisipasi');
         });
 
-        // pelaksanaan survei: admin, humas
-        Route::middleware(SurveiRole::class.':admin,humas')->group(function () {
-            Route::resource('periode', PeriodeController::class)->except(['show']);
-            Route::resource('pertanyaan', PertanyaanController::class)->except(['show']);
-        });
+        // pelaksanaan survei: admin, humas (belum diimplementasi)
+        // Route::middleware(SurveiRole::class.':admin,humas')->group(function () {
+        //     Route::resource('periode', PeriodeController::class)->except(['show']);
+        //     Route::resource('pertanyaan', PertanyaanController::class)->except(['show']);
+        // });
 
-        // pengelolaan data: admin saja
-        Route::middleware(SurveiRole::class.':admin')->group(function () {
-            Route::resource('aspek', AspekController::class)->except(['show']);
-            Route::resource('direktori', DirektoriController::class)->except(['show']);
-            Route::resource('akun', AkunController::class)->only(['index', 'update', 'destroy']);
-        });
+        // pengelolaan data: admin saja (belum diimplementasi)
+        // Route::middleware(SurveiRole::class.':admin')->group(function () {
+        //     Route::resource('aspek', AspekController::class)->except(['show']);
+        //     Route::resource('direktori', DirektoriController::class)->except(['show']);
+        //     Route::resource('akun', AkunController::class)->only(['index', 'update', 'destroy']);
+        // });
     });
 });
 

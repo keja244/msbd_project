@@ -49,6 +49,73 @@ class DashboardController extends Controller
             ));
         }
 
+        // Dashboard khusus Sarpras
+        if ($role === 'sarpras') {
+            $periode = DB::table('survei')
+                ->where('status', 'Aktif')
+                ->whereNull('deleted_at')
+                ->orderByDesc('survei_id')
+                ->first();
+
+            $jumlahFasilitas = DB::table('sarana_prasarana')
+                ->whereNull('deleted_at')
+                ->count();
+
+            $jumlahPertanyaan = 0;
+            $rataSkor = 0;
+            $jumlahJawaban = 0;
+
+            if ($periode) {
+                $jumlahPertanyaan = DB::table('pertanyaan')
+                    ->where('survei_id', $periode->survei_id)
+                    ->where('aspek_id', 4)
+                    ->where('aktif', 1)
+                    ->whereNull('deleted_at')
+                    ->count();
+
+                // Hitung rata-rata hasil survei khusus aspek sarpras
+                $hasilSarpras = DB::table('jawaban as j')
+                    ->join('pertanyaan as p', 'j.pertanyaan_id', '=', 'p.pertanyaan_id')
+                    ->where('j.survei_id', $periode->survei_id)
+                    ->where('p.aspek_id', 4)
+                    ->whereNotNull('j.skor')
+                    ->select(
+                        DB::raw('ROUND(AVG(j.skor), 2) as rata'),
+                        DB::raw('COUNT(j.jawaban_id) as total')
+                    )
+                    ->first();
+
+                if ($hasilSarpras) {
+                    $rataSkor = $hasilSarpras->rata ?? 0;
+                    $jumlahJawaban = $hasilSarpras->total ?? 0;
+                }
+            }
+
+            $fasilitasTerbaru = DB::table('sarana_prasarana')
+                ->whereNull('deleted_at')
+                ->orderByDesc('sarpras_id')
+                ->take(4)
+                ->get();
+
+            $pertanyaanList = $periode ? DB::table('pertanyaan')
+                ->where('survei_id', $periode->survei_id)
+                ->where('aspek_id', 4)
+                ->whereNull('deleted_at')
+                ->orderBy('urutan')
+                ->take(4)
+                ->get() : collect();
+
+            return view('survei.dashboard.sarpras', compact(
+                'periode',
+                'jumlahFasilitas',
+                'jumlahPertanyaan',
+                'rataSkor',
+                'jumlahJawaban',
+                'fasilitasTerbaru',
+                'pertanyaanList'
+            ));
+        }
+
         // Dashboard untuk role lainnya tetap menggunakan DataHasil
         $aspek = collect(DataHasil::untukRole($role))
             ->filter(fn ($a) => $a['rata'] !== null)
