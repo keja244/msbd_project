@@ -78,9 +78,34 @@
               class="sv-pane {{ old('mode') === 'tamu' ? 'hidden' : '' }}">
               @csrf
               <div class="mb-4">
-                <label for="username" class="block text-xs font-bold mb-1.5">NIS / NIP / Username</label>
-                <input id="username" name="username" value="{{ old('username') }}" autocomplete="username" required
-                  class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-transparent focus:outline-none focus:ring-2 focus:ring-smanda-green">
+                <label for="username" class="block text-xs font-bold mb-1.5">
+                      NIS / NIP / Username
+                </label>
+                <input id="username" name="username"
+                    value="{{ old('username') }}"
+                    autocomplete="username"
+                    required
+                    class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-transparent focus:outline-none focus:ring-2 focus:ring-smanda-green">
+              </div>
+
+              <div id="pilihan-jabatan" class="mb-5 {{ old('username') === 'guru_tendik' ? '' : 'hidden' }}">
+                <label class="block text-xs font-bold mb-2">
+                    Pilih Jabatan
+                </label>
+
+                  <div class="grid grid-cols-2 gap-3">
+                      <label class="flex items-center gap-2 p-3 rounded-xl border border-gray-200 dark:border-gray-700 cursor-pointer">
+                          <input type="radio" name="jabatan" value="guru"
+                              {{ old('jabatan') === 'guru' ? 'checked' : '' }}>
+                          <span class="text-sm font-medium">Guru</span>
+                      </label>
+
+                      <label class="flex items-center gap-2 p-3 rounded-xl border border-gray-200 dark:border-gray-700 cursor-pointer">
+                          <input type="radio" name="jabatan" value="tendik"
+                              {{ old('jabatan') === 'tendik' ? 'checked' : '' }}>
+                          <span class="text-sm font-medium">Tendik</span>
+                      </label>
+                  </div>
               </div>
               <div class="mb-5">
                 <label for="password" class="block text-xs font-bold mb-1.5">Kata Sandi</label>
@@ -102,11 +127,13 @@
               <input type="hidden" name="mode" value="tamu">
               <div class="mb-4">
                 <label for="kategori" class="block text-xs font-bold mb-1.5">Saya adalah</label>
-                <select id="kategori" name="kategori" required
+              <select id="kategori" name="kategori" required
                   class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-transparent dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-smanda-green">
-                  <option value="orang_tua" @selected(old('kategori') === 'orang_tua')>Orang Tua / Wali</option>
-                  <option value="masyarakat" @selected(old('kategori') === 'masyarakat')>Masyarakat</option>
-                </select>
+
+                  <option value="3" @selected(old('kategori') == '3')>
+                      Masyarakat / Orang Tua
+                  </option>
+              </select>
               </div>
               <div class="mb-4">
                 <label for="nama" class="block text-xs font-bold mb-1.5">Nama</label>
@@ -195,20 +222,30 @@
 </div>
 
 <script>
-  document.querySelectorAll('.sv-tab').forEach(function (tab) {
-    tab.addEventListener('click', function () {
-      var on = ['bg-white', 'dark:bg-gray-700', 'text-gray-900', 'dark:text-white', 'shadow-sm'];
-      var off = ['text-gray-500', 'dark:text-gray-400'];
-      document.querySelectorAll('.sv-tab').forEach(function (t) {
-        var active = t === tab;
-        on.forEach(function (c) { t.classList.toggle(c, active); });
-        off.forEach(function (c) { t.classList.toggle(c, !active); });
-      });
-      document.querySelectorAll('.sv-pane').forEach(function (p) {
-        p.classList.toggle('hidden', p.id !== 'pane-' + tab.dataset.pane);
-      });
-    });
-  });
+  document.addEventListener('DOMContentLoaded', function () {
+    const usernameInput = document.getElementById('username');
+    const pilihanJabatan = document.getElementById('pilihan-jabatan');
+
+    if (!usernameInput || !pilihanJabatan) return;
+
+    function cekUsername() {
+        const username = usernameInput.value.trim().toLowerCase();
+        const isGuruTendik = username === 'guru_tendik';
+
+        pilihanJabatan.classList.toggle('hidden', !isGuruTendik);
+
+        pilihanJabatan.querySelectorAll('input').forEach(function (input) {
+            input.required = isGuruTendik;
+
+            if (!isGuruTendik) {
+                input.checked = false;
+            }
+        });
+    }
+
+    usernameInput.addEventListener('input', cekUsername);
+    cekUsername();
+});
 </script>
 
 @endsection

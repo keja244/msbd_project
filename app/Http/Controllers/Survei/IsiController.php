@@ -16,10 +16,17 @@ class IsiController extends Controller
 
         $kategori = $this->kategori($request);
 
+        $namaKategori = match ((string) $kategori) {
+            '1', 'siswa' => 'Siswa',
+            '2', 'guru', 'tendik' => 'Guru / Tendik',
+            '3', 'masyarakat', 'orang_tua', 'tamu' => 'Masyarakat / Orang Tua',
+            default => 'Responden',
+        };
+
         return view('survei.isi', [
             'role' => $request->session()->get('survei.role'),
-            'namaKategori' => DataSurvei::NAMA[$kategori],
-            'aspek' => DataSurvei::pertanyaan($kategori),
+            'namaKategori' => $namaKategori,
+            'aspek' => DataSurvei::pertanyaan((string) $kategori),
         ]);
     }
 
@@ -29,13 +36,16 @@ class IsiController extends Controller
             return redirect()->route('survei.selesai');
         }
 
+        $kategori = $this->kategori($request);
+
         $rules = ['isian' => 'nullable|string|max:1000'];
-        foreach (DataSurvei::semuaId($this->kategori($request)) as $id) {
+
+        foreach (DataSurvei::semuaId((string) $kategori) as $id) {
             $rules["jawaban.$id"] = 'required|integer|between:1,5';
         }
+
         $data = $request->validate($rules);
 
-        // DEMO: disimpan di session. Nanti: INSERT ke jawaban + partisipasi (UNIQUE cegah isi ganda).
         $request->session()->put('survei.jawaban', $data);
         $request->session()->put('survei.selesai', true);
 
@@ -47,10 +57,12 @@ class IsiController extends Controller
         return view('survei.selesai');
     }
 
-    private function kategori(Request $request): string
+    private function kategori(Request $request)
     {
         $role = $request->session()->get('survei.role');
 
-        return $role === 'tamu' ? $request->session()->get('survei.kategori') : $role;
+        return $role === 'tamu'
+            ? $request->session()->get('survei.kategori')
+            : $role;
     }
 }
