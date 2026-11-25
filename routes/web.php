@@ -1,6 +1,10 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AlumniController;
+use App\Http\Controllers\GaleriController;
+use App\Http\Controllers\KalenderController;
+use App\Http\Controllers\ArtikelController;
 use App\Http\Middleware\SurveiRole;
 use App\Http\Controllers\Survei\{
     AkunController,
@@ -34,28 +38,41 @@ Route::prefix('profil')->group(function () {
     Route::get('/osis', function () {
         return view('profil-sekolah.osis');
     });
-    Route::get('/galeri-foto', function () {
-        return view('profil-sekolah.galeri-foto');
-    });
-    Route::get('/galeri-video', function () {
-        return view('profil-sekolah.galeri-video');
-    });
+     // Galeri foto & video (satu halaman, tab awal ditentukan dari alamat)
+    Route::get('/galeri', [GaleriController::class, 'index'])->defaults('tab', 'semua')->name('galeri');
+    Route::get('/galeri-foto', [GaleriController::class, 'index'])->defaults('tab', 'foto')->name('galeri.foto');
+    Route::get('/galeri-video', [GaleriController::class, 'index'])->defaults('tab', 'video')->name('galeri.video');
+    Route::get('/galeri-foto/semua', [GaleriController::class, 'semuaFoto'])->name('galeri.foto.semua');
+    Route::get('/galeri-video/semua', [GaleriController::class, 'semuaVideo'])->name('galeri.video.semua');
 });
+ 
 
 // --- AKADEMIK & INFORMASI ---
 Route::prefix('akademik')->group(function () {
     Route::get('/silabus', function () {
         return view('akademik.rpm');
     });
-    Route::get('/kalender', function () {
-        return view('akademik.kalender');
+       // Kalender
+   Route::get('/kalender', function () {
+    $events = [];
+
+    return view('akademik.kalender', compact('events'));
+})->name('kalender');
+
+    Route::get('/kalender-tahunan', function () {
+        return view('akademik.kalender-tahunan');
+    })->name('kalender.tahunan');
+
+    Route::get('/prestasi', function () {
+        return view('akademik.prestasi');
     });
     Route::get('/prestasi', function () {
         return view('akademik.prestasi');
     });
-    Route::get('/artikel', function () {
-        return view('akademik.artikel');
-    });
+    Route::get('/artikel', [ArtikelController::class, 'index'])->name('artikel');
+    Route::get('/artikel/{slug}', [ArtikelController::class, 'show'])
+        ->where('slug', '[a-z0-9\-]+')
+        ->name('artikel.show');
     Route::get('/berita', function () {
         return view('akademik.berita');
     });
@@ -74,11 +91,9 @@ Route::prefix('direktori')->group(function () {
     Route::get('/guru', function () {
         return view('direktori.guru');
     });
-    Route::get('/alumni', function () {
-        return view('direktori.alumni');
+    Route::get('/alumni', [AlumniController::class, 'index'])
+    ->name('alumni');
     });
-});
-
 // --- EKSTRAKURIKULER & OSIS ---
 Route::get('/ekstrakurikuler', function () {
     return view('osis-ekskul.index');
